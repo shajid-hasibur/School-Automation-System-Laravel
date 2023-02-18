@@ -64,7 +64,7 @@ Student Marks Entry
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
-                                <a id="search" name="search" class="btn btn-rounded btn-outline-info mt-3 ml-5 p-3">Search</a>
+                                <button type="button" name="search" id="search" class="btn btn-secondary" style="margin-top: 32px; margin-left:33px;">Search</button>
                             </div>
                         </div>
 
@@ -74,7 +74,7 @@ Student Marks Entry
                                 <table class="table table-bordered table-dark">
                                     <thead>
                                         <tr>
-                                            <th>ID No</th>
+                                            <th>ID</th>
                                             <th>Student Name</th>
                                             <th>Father Name</th>
                                             <th>Gender</th>
@@ -88,7 +88,7 @@ Student Marks Entry
                                     </tbody>
                                 </table>
                             </div>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary">Update Mark</button>
                         </div>
                     </form>
                 </div>
@@ -128,9 +128,9 @@ Student Marks Entry
                         '<td>' + value.student.name + '</td>' +
                         '<td>' + value.student.fname + '</td>' +
                         '<td>' + value.student.gender + '</td>' +
-                        '<td>' + '<input type="text" class="form-control" name="descriptive_mark[]" value="' + value.descriptive_mark + '"/>' + '</td>' +
-                        '<td>' + '<input type="text" class="form-control" name="objective_mark[]" value="' + value.objective_mark + '"/>' + '</td>' +
-                        '<td>' + '<input type="text" class="form-control" name="practical_mark[]" value="' + value.practical_mark + '"/>' + '</td>' +
+                        '<td>' + '<input type="text" class="form-control" name="descriptive_mark[]" value="' + value.descriptive_mark + '" required/>' + '</td>' +
+                        '<td>' + '<input type="text" class="form-control" name="objective_mark[]" value="' + value.objective_mark + '" required/>' + '</td>' +
+                        '<td>' + '<input type="text" class="form-control" name="practical_mark[]" value="' + value.practical_mark + '" required/>' + '</td>' +
                         '</tr>';
                 });
                 html = $('#marks-entry-tbody').html(html);

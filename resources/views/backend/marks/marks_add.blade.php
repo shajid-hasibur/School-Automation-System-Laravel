@@ -64,7 +64,7 @@ Student Marks Entry
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
-                                <a id="search" name="search" class="btn btn-rounded btn-outline-info mt-3 ml-5 p-3">Search</a>
+                                <button type="button" name="search" id="search" class="btn btn-secondary" style="margin-top: 32px; margin-left:33px;">Search</button>
                             </div>
                         </div>
 

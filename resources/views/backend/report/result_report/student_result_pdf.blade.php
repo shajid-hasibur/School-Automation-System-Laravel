@@ -358,6 +358,15 @@
         .text-center {
             text-align: center !important;
         }
+        /* table, th, td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        } */
+
+        .design th, .design td{
+            border: 1px solid black;
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -391,7 +400,7 @@
         <br><br>
         <div class="row">
             <div class="col-md-4">
-                <table class="table">
+                <table class="table design" id="result"  style="border-collapse: collapse;">
                     <caption><strong>Student</strong> </caption>
                     @php
                         $assign_student = App\Models\AssignStudent::where('year_id', $allMarks['0']->year_id)
@@ -421,13 +430,15 @@
                 </table>
             </div>
 
-            <div class="col-md-4 offset-md-4">
-                <table class="table">
-                    <caption><strong>Letter Grade</strong> </caption>
+            <div class="col-md-6 offset-md-4">
+                <table class="table design" id="result"  style="border-collapse: collapse;">
+                    <caption><strong>Letter Grade</strong></caption>
                     <thead>
+                        <tr>
                         <th>Letter Grade</th>
                         <th>Marks Interval</th>
                         <th>Grade Point</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($allGrades as $grade)
@@ -444,9 +455,10 @@
         <br>
         <div class="row">
             <div class="col-md-12">
-                <table class="table">
+                <table class="table design" id="result"  style="border-collapse: collapse;">
                     <caption><strong>Result List</strong></caption>
                     <thead>
+                        <tr>
                         <th>Sl</th>
                         <th>Subject</th>
                         <th>Full Marks</th>
@@ -454,6 +466,7 @@
                         <th>Obtained Marks</th>
                         <th>Grade</th>
                         <th>Grade Point</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @php
@@ -462,7 +475,7 @@
                         @endphp
                         @foreach ($allMarks as $key => $mark)
                             @php
-                                $obtained_marks = $mark->marks;
+                                $obtained_marks = $mark->total_mark;
                                 $total_marks = (float) $total_marks + (float) $obtained_marks;
                                 $total_subject = App\Models\StudentMarks::where('year_id', $mark->year_id)
                                     ->where('class_id', $mark->class_id)
@@ -495,7 +508,7 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <table class="table">
+                <table class="table design" id="result"  style="border-collapse: collapse;">
                     <caption><strong>Result</strong></caption>
                     @php
                         $total_grade = 0;

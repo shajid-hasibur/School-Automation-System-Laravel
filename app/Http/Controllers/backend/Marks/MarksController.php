@@ -131,7 +131,6 @@ class MarksController extends Controller
     public function MarksUpdate(Request $request)
     {
         StudentMarks::where('year_id', $request->year_id)->where('class_id', $request->class_id)->where('section_id', $request->section_id)->where('assign_subject_id', $request->assign_subject_id)->where('exam_type_id', $request->exam_type_id)->delete();
-        dd($request->all());
         $student_count = count($request->student_id);
         if ($student_count) {
             for ($i = 0; $i < $student_count; $i++) {
