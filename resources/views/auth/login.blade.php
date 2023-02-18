@@ -42,12 +42,10 @@
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-head">
-                                            {{-- <a href="index.html" class="logo"><img src="{{ asset('backend/assets/images/logo.svg') }}" class="img-fluid" alt="logo"></a> --}}
-                                            
-                                            <h2>School Management System</h2>
-                                        
+                                            <a href="{{url('/')}}" class="logo logo-large"><img src="{{ asset('backend/assets/images/ums.png') }}" class="img-responsive" alt="logo" style="width:60px; height:60px;"></a>
+                                            <h2>Unique Model School</h2>
                                         </div>
-                                        <h4 class="text-primary my-4">Log in !</h4>
+                                        {{-- <h4 class="text-primary my-4">Log in !</h4> --}}
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="email" placeholder="Enter Email here" type="email" name="email" :value="old('email')" required autofocus>
                                             @error('email')
@@ -71,21 +69,21 @@
                                                     <label class="custom-control-label font-14" for="remember_me">{{ __('Remember me') }}</label>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            {{-- <div class="col-sm-6">
                                                 <div class="forgot-psw">
                                                     @if (Route::has('password.request'))
                                                     <a id="forgot-psw" href="{{ route('password.request') }}" class="font-14">{{ __('Forgot your password?') }}</a>
                                                     @endif
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <button type="submit" class="btn btn-success btn-lg btn-block font-18">{{ __('Log in') }}</button>
                                     </form>
-                                    <div class="login-or">
+                                    {{-- <div class="login-or">
                                         <h6 class="text-muted">OR</h6>
-                                    </div>
+                                    </div> --}}
                                     
-                                    <p class="mb-0 mt-3">Don't have a account? <a href="{{ route('register') }}">Sign up</a></p>
+                                    {{-- <p class="mb-0 mt-3">Don't have a account? <a href="{{ route('register') }}">Sign up</a></p> --}}
                                 </div>
                             </div>
                         </div>
