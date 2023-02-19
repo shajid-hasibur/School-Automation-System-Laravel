@@ -144,6 +144,7 @@ class StudentRegistrationController extends Controller
         $students['sections'] = StudentSection::all();
         $students['shifts'] = StudentShift::all();
         $students['editData'] = AssignStudent::with('student', 'discount')->where('student_id',$student_id)->first();
+        // dd($students['editData']);
         return view('backend.student.student_registration.student_edit', $students);
     }
 

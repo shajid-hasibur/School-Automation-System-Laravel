@@ -18,7 +18,8 @@ class AdminUserSeeder extends Seeder
             'name' => 'Md.Hasibur Rahman',
             'email' => 'admin@example.com',
             'password' => bcrypt('123456'),
-            'usertype' => 'admin'
+            'usertype' => 'admin',
+            'role' => 'admin'
         ]);
     }
 }

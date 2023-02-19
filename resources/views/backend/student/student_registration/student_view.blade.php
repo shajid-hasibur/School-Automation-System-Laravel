@@ -83,7 +83,7 @@ Student List
                                     <th>Shift</th>
                                     <th>Year</th>
                                     <th>Image</th>
-                                    @if(Auth::user()->usertype == 'admin')
+                                    @if(Auth::user()->role == 'admin')
                                     <th>Code</th>
                                     @endif
                                     <th>Action</th>
@@ -103,7 +103,9 @@ Student List
                                     <td>
                                         <img src="{{ (!empty($value['student']['image']))? url('uploads/student_images/'.$value['student']['image']) : url('uploads/no_image.jpg') }}" alt="user-img" style="width: 50px;" id="showImage">
                                     </td>
+                                    @if(Auth::user()->role == 'admin')
                                     <td>{{ $value['student']['code'] }}</td>
+                                    @endif
                                     <td style="white-space: nowrap;">
                                         <a href="{{ route('student.registration.edit', $value->student_id) }}" style="float: none; margin: 1px;" class="tabledit-edit-button btn btn-info"><span class="ti-pencil"></span></a>
 
@@ -129,7 +131,7 @@ Student List
                                     <th>Shift</th>
                                     <th>Year</th>
                                     <th>Image</th>
-                                    @if(Auth::user()->role == 'Admin')
+                                    @if(Auth::user()->role == 'admin')
                                     <th>Code</th>
                                     @endif
                                     <th>Action</th>
@@ -148,7 +150,9 @@ Student List
                                     <td>
                                         <img src="{{ (!empty($value['student']['image']))? url('uploads/student_images/'.$value['student']['image']) : url('uploads/no_image.jpg') }}" alt="user-img" style="width: 50px;" id="showImage">
                                     </td>
+                                    @if(Auth::user()->role == 'admin')
                                     <td>{{ $value['student']['code'] }}</td>
+                                    @endif
                                     <td style="white-space: nowrap;">
                                         <a href="{{ route('student.registration.edit', $value->student_id) }}" style="float: none;" class="btn btn-warning"><i class="feather icon-edit"></i></a>
 

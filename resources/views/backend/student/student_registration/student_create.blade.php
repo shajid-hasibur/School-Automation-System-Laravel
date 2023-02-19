@@ -25,28 +25,28 @@ Add Student
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="student_name"><strong>Student Name</strong> <span class="text-danger">*</span></label>
-                                <input type="text" name="student_name" class="form-control" id="student_name" placeholder="Enter Student Name">
+                                <input type="text" name="student_name" class="form-control" id="student_name" placeholder="Enter Student Name" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="father_name"><strong>Father's Name</strong> <span class="text-danger">*</span></label>
-                                <input type="text" name="father_name" class="form-control" id="father_name" placeholder="Enter Father's Name">
+                                <input type="text" name="father_name" class="form-control" id="father_name" placeholder="Enter Father's Name" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="mother_name"><strong>Mother's Name</strong> <span class="text-danger">*</span></label>
-                                <input type="text" name="mother_name" class="form-control" id="mother_name" placeholder="Enter Mother's Name">
+                                <input type="text" name="mother_name" class="form-control" id="mother_name" placeholder="Enter Mother's Name" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="mobile"><strong>Mobile</strong> <span class="text-danger">*</span></label>
-                                <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Enter Mobile">
+                                <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Enter Mobile" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="address"><strong>Address</strong> <span class="text-danger">*</span></label>
-                                <input type="text" name="address" class="form-control" id="address" placeholder="Enter Address">
+                                <input type="text" name="address" class="form-control" id="address" placeholder="Enter Address" required>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="mname"><strong>Gender</strong> <span class="text-danger">*</span></label>
+                                <label for="mname"><strong>Gender</strong></label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
                                     <label class="form-check-label" for="gender">Male</label>
@@ -64,7 +64,7 @@ Add Student
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="religion"><strong>Religion</strong> <span class="text-danger">*</span></label>
-                                <select name="religion" id="religion" class="form-control">
+                                <select name="religion" id="religion" class="form-control" required>
                                     <option value="Islam">Islam</option>
                                     <option value="Hindu">Hindu</option>
                                     <option value="Buddhist">Buddhist</option>
@@ -74,17 +74,17 @@ Add Student
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="dob"><strong>Date of Birth</strong> <span class="text-danger">*</span></label>
-                                <input type="date" name="dob" class="form-control" id="dob" placeholder="Enter Father's Name">
+                                <input type="date" name="dob" class="form-control" id="dob" placeholder="Enter date of birth" required>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="discount"><strong>Discount</strong> <span class="text-danger">*</span></label>
+                                <label for="discount"><strong>Discount</strong></label>
                                 <input type="text" name="discount" class="form-control" id="discount" placeholder="Enter Discount">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="year_id"><strong>Year</strong> <span class="text-danger">*</span></label>
-                                <select name="year_id" class="form-control" id="year_id">
+                                <select name="year_id" class="form-control" id="year_id" required>
                                     <option value="">Select</option>
                                     @foreach ($years as $year)
                                     <option value="{{ $year->id }}">{{ $year->year }}</option>
@@ -93,7 +93,7 @@ Add Student
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="class_id"><strong>Class</strong> <span class="text-danger">*</span></label>
-                                <select name="class_id" class="form-control" id="class_id">
+                                <select name="class_id" class="form-control" id="class_id" required>
                                     <option value="">Select</option>
                                     @foreach ($classes as $class)
                                     <option value="{{ $class->id }}">{{ $class->name }}</option>
@@ -101,7 +101,7 @@ Add Student
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="group_id"><strong>Group</strong> <span class="text-danger">*</span></label>
+                                <label for="group_id"><strong>Group</strong></label>
                                 <select name="group_id" class="form-control" id="group_id">
                                     <option value="">Select</option>
                                     @foreach ($groups as $group)
@@ -113,7 +113,7 @@ Add Student
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="shift_id"><strong>Shift</strong> <span class="text-danger">*</span></label>
-                                <select name="shift_id" class="select2-single form-control" id="shift_id">
+                                <select name="shift_id" class="select2-single form-control" id="shift_id" required>
                                     <option value="">Select</option>
                                     @foreach ($shifts as $shift)
                                     <option value="{{ $shift->id }}">{{ $shift->shift_name }}</option>
@@ -121,7 +121,7 @@ Add Student
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="section_id"><strong>Section</strong> <span class="text-danger">*</span></label>
+                                <label for="section_id"><strong>Section</strong></label>
                                 <select name="section_id" class="select2-single form-control" id="section_id">
                                     <option value="">Select</option>
                                     @foreach ($sections as $section)
@@ -130,7 +130,7 @@ Add Student
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="roll"><strong>Roll</strong> <span class="text-danger">*</span></label>
+                                <label for="roll"><strong>Roll</strong></label>
                                 <input type="text" name="roll" class="form-control" id="roll" placeholder="Enter Roll">
                             </div>
                         </div>
@@ -140,7 +140,7 @@ Add Student
                                 <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="class"><strong>Profile Picture</strong> <span class="text-danger">*</span></label>
+                                <label for="class"><strong>Profile Picture</strong></label>
                                 <input type="file" class="form-control" name="image" id="image" onchange="preview()">
                             </div>
                             <div class="form-group col-md-4">
