@@ -75,7 +75,10 @@ class MonthlyFeeController extends Controller
         $data['month'] = $month;
         $data['details'] = AssignStudent::with(['student', 'discount'])->where('class_id', $class_id)->where('student_id', $student_id)->first();
 
-        $pdf = PDF::loadView('backend.student.monthly_fee.monthly_fee_payslip', $data);
+        $pdf = PDF::loadView('backend.student.monthly_fee.monthly_fee_payslip', $data,[],[
+            'format' => [150,100],
+            'orientation' => 'L'
+        ]);
         $pdf->setProtection(['copy', 'print'],'','pass');
         return $pdf->stream('monthly_fee_payslip.pdf');
     }

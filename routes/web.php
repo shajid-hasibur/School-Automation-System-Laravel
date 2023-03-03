@@ -294,7 +294,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('entry/update', [MarksController::class, 'MarksUpdate'])->name('marks.entry.update');
         Route::get('details/{id}', [MarksController::class, 'MarksDetails'])->name('marks.details');
         Route::get('delete/{id}', [MarksController::class, 'MarksDelete'])->name('marks.delete');
-
+        Route::get('marks/getstudents',[MarksController::class, 'GetStudents'])->name('marks.get.students');
         Route::get('marksexistence',[MarksController::class, 'MarksCheck'])->name('marks.check.existence');
 
         //Marks Grade Routes
@@ -372,7 +372,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('marks/getsubjects',[DefaultController::class, 'GetSubjects'])->name('marks.get.subjects');
-    Route::get('marks/getstudents',[MarksController::class, 'GetStudents'])->name('marks.get.students');
+    
     // Route::get('marks/getmarksexistence',[MarksController::class, 'MarksCheck'])->name('marks.check.existence');
 
     Route::get('attendance/getstudents',[DefaultController::class, 'AttendanceGetStudents'])->name('attendance.get.students');

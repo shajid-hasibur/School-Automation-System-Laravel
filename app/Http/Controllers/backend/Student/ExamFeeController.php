@@ -41,7 +41,7 @@ class ExamFeeController extends Controller
         $html['thsource'] .= '<th>Action</th>';
 
         foreach ($allStudent as $key => $v) {
-            $registration_fee = FeeCategoryAmount::where('fee_category_id', 3)->where('class_id', $v->class_id)->first();
+            $registration_fee = FeeCategoryAmount::where('fee_category_id', 4)->where('class_id', $v->class_id)->first();
             $colour = 'success';
 
             $html[$key]['tdsource'] = '<td>' . ($key + 1) . '</td>';
@@ -71,7 +71,10 @@ class ExamFeeController extends Controller
         $data['exam'] = ExamType::find($exam)['name'];
         $data['details'] = AssignStudent::with(['student', 'discount'])->where('class_id', $class_id)->where('student_id', $student_id)->first();
 
-        $pdf = PDF::loadView('backend.student.exam_fee.exam_fee_payslip', $data);
+        $pdf = PDF::loadView('backend.student.exam_fee.exam_fee_payslip', $data,[],[
+            'format' => [150,100],
+            'orientation' => 'L'
+        ]);
         $pdf->setProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('exam_fee_payslip.pdf');
     }

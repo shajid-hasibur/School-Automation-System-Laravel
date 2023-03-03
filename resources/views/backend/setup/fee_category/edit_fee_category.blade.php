@@ -21,7 +21,7 @@ Edit Fee Category
                     <form class="form-validate" action="{{ route('fee.category.update', $feeCategory->id) }}" method="post">
                         @csrf
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label" for="name">Shift <span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label" for="name">Fee Type<span class="text-danger">*</span></label>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter Fee Category Name" value="{{ $feeCategory->name }}">
                             </div>

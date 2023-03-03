@@ -42,7 +42,7 @@ class MarksController extends Controller
         if ($markExists != true) {
             return response()->json($students);
         } else {
-            $result = 'no';
+            // $result = 'no';
             return response()->json([
                 'result' => 'no',
             ]);
