@@ -27,12 +27,13 @@ Subject List
                         <table id="datatable-buttons" class="table table-dark table-bordered">
                             <thead>
                                 <tr>
-                                    <th width="10%">Sl</th>
+                                    <th width="10%">#</th>
                                     <th>Subject Name</th>
                                     <th width="15%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @foreach($subjects as $key => $subject)
                                 <tr>
                                     <td>{{ $key+1 }}</td>

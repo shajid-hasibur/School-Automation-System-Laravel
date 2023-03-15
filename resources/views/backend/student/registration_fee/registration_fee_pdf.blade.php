@@ -50,7 +50,7 @@
 <body>
     <div class="container">
         <div style="text-align: center">
-            <a><img src="{{ public_path('uploads/ums.jpg') }}"  style="width:60px; height:60px;  margin-left:0px;"></a>
+            <a><img src="{{ public_path('uploads/ums.jpg') }}"  style="width:60px; height:60px;"></a>
         </div>
         <div style="font-size: 12px; text-align:center">
             <h1><b>Unique Model School</b></h1>

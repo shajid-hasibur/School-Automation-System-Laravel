@@ -33,10 +33,13 @@ class MarksheetController extends Controller
         $exam_type_id = $request->exam_type_id;
         $id_no = $request->id_no;
 
-        $count_fail = StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->where('marks', '<', '33')->get()->count();
-
+        // $subject_flag = StudentMarks::with(['assign_subject' => function($sub){
+        //     $sub->where('id','assign_subject_id');
+        // }])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->where('total_mark', '<', '33')->get();
+        // dd($subject_flag);
+        $count_fail = StudentMarks::with(['assign_subject'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->where('total_mark', '<', '33')->get()->count();
+        // dd($count_fail);
         $student_single = StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->first();
-
         if ($student_single == true) {
             $allMarks = StudentMarks::with(['assign_subject', 'year'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->get();
             // dd($allMarks->toArray());
@@ -45,7 +48,7 @@ class MarksheetController extends Controller
         }else{
             $notification = array(
                 'message' => 'No Record Found!',
-                'alert-type' => 'error'
+                'alert-type' => 'error',
             );
             return redirect()->back()->with($notification);
         }

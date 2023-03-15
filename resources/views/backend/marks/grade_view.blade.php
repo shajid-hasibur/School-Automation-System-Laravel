@@ -50,7 +50,7 @@ Grade Marks
                                     <td style="white-space: nowrap;">
                                         <a href="{{ route('marks.grade.edit', $value->id ) }}" style="float: none; margin: 1px;" class="btn btn-info"><span class="ti-pencil"></span></a>
 
-                                        <a href="" class="btn btn-danger" style="float: none;" id="delete"><span class="ti-trash"></span></a>
+                                        <a href="{{ route('marks.grade.delete', $value->id) }}" class="btn btn-danger" style="float: none;" id="delete"><span class="ti-trash"></span></a>
                                     </td>
                                 </tr>
                                 @endforeach

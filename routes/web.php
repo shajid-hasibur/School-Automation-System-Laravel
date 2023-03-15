@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdditionalSubController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\backend\Account\AccountSalaryController;
 use App\Http\Controllers\backend\Account\OtherAccountController;
@@ -182,6 +183,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('assign/subject/update/{class_id}', [AssignSubjectController::class, 'AssignSubjectUpdate'])->name('assign.subject.update');
         Route::get('assign/subject/details/{class_id}', [AssignSubjectController::class, 'AssignSubjectDetail'])->name('assign.subject.details');
         Route::get('assign/subject/delete/{class_id}', [AssignSubjectController::class, 'AssignSubjectDelete'])->name('assign.subject.delete');
+
+        //Assign additional subject routes
+        Route::get('additional/search/student',[AdditionalSubController::class,'search']);
+        Route::resource('additional', AdditionalSubController::class);
 
         //Designation Routes
         Route::get('designation/view', [DesignationController::class, 'DesignationView'])->name('designation.view');

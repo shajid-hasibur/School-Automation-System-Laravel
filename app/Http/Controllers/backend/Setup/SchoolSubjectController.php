@@ -24,6 +24,7 @@ class SchoolSubjectController extends Controller
         ]);
         $subject = new SchoolSubject();
         $subject->name = $request->name;
+        $subject->flag = $request->flag;
         $subject->save();
         $notification = array(
             'message' => 'Subject Created Successfully',
@@ -33,7 +34,10 @@ class SchoolSubjectController extends Controller
     }
     public function SubjectEdit($id)
     {
+        // $values = SchoolSubject::all();
+        // dd( $values);
         $subject = SchoolSubject::find($id);
+        // dd($subject);
         return view('backend.setup.subject.edit_subject', compact('subject'));
     }
     public function SubjectUpdate(Request $request, $id)
@@ -43,6 +47,7 @@ class SchoolSubjectController extends Controller
             'name' => 'required|unique:school_subjects,name,' . $subject->id,
         ]);
         $subject->name = $request->name;
+        $subject->flag = $request->flag;
         $subject->save();
         $notification = array(
             'message' => 'Subject Updated Successfully',

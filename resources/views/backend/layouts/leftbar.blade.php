@@ -75,6 +75,7 @@ $array = $user['permission'];
                         <li><a href="{{ route('exam.type.view') }}">Exam Type</a></li>
                         <li><a href="{{ route('subject.view') }}">Subject</a></li>
                         <li><a href="{{ route('assign.subject.view') }}">Assign Subject</a></li>
+                        <li><a href="{{ route('additional.index') }}">Additional Subject</a></li>
                         <li><a href="{{ route('designation.view') }}">Designation</a></li>
                         <li><a href="{{ route('routine.view') }}">Routine</a></li>
                     </ul>

@@ -375,14 +375,14 @@
         <div class="header">
             <table class="styled-table">
                 <tr>
-                    <th width="50%">
-                        <h1>Your School logo</h1>
+                    <th width="30%">
+                        {{-- <img src="{{ asset('backend/assets/images/ums.png') }}" class="img-responsive" alt="logo" style="width:100px; height:100px;"> --}}
                     </th>
                     <td>
-                        <h1>Your School</h1>
-                        <h3>School Address</h3>
-                        <p>Phone: 01454658878</p>
-                        <p>Email: yourschoolemail@gmail.com</p>
+                        <h1>Unique Model School</h1>
+                        <h3>Address : Shahzadpur, Sirajganj</h3>
+                        <p>Phone: 01729619595</p>
+                        <p>Email: uniquemodelschool14@gmail.com</p>
                         <p>Student Result Report</p>
                     </td>
                 </tr>
@@ -405,6 +405,7 @@
                     @php
                         $assign_student = App\Models\AssignStudent::where('year_id', $allMarks['0']->year_id)
                             ->where('class_id', $allMarks['0']->class_id)
+                            ->where('student_id',$allMarks['0']->student_id)
                             ->first();
                     @endphp
                     <tr>

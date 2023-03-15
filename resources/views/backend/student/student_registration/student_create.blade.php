@@ -136,8 +136,8 @@ Add Student
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label for="email"><strong>Email</strong> <span class="text-danger">*</span></label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
+                                <label for="email"><strong>Email</strong></label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="class"><strong>Profile Picture</strong></label>

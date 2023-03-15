@@ -46,7 +46,7 @@ Student Marks Entry
                         <div class="col-md-6">
                             <table class="table">
                                 @php
-                                $assign_student = App\Models\AssignStudent::where('year_id', $allMarks['0']->year_id)->where('class_id', $allMarks['0']->class_id)->first();
+                                $assign_student = App\Models\AssignStudent::where('year_id', $allMarks['0']->year_id)->where('class_id', $allMarks['0']->class_id)->where('student_id', $allMarks['0']->student_id)->first();
                                 @endphp
                                 <tr>
                                     <td>Student ID</td>
@@ -103,6 +103,8 @@ Student Marks Entry
                                     <th>Grade Point</th>
                                 </thead>
                                 <tbody>
+                                   
+
                                     @php
                                     $total_marks = 0;
                                     $total_grade_point = 0;
@@ -112,18 +114,28 @@ Student Marks Entry
                                         $obtained_marks = $mark->total_mark;
                                         $total_marks = (float)$total_marks + (float)$obtained_marks;
                                         $total_subject = App\Models\StudentMarks::where('year_id', $mark->year_id)->where('class_id', $mark->class_id)->where('exam_type_id', $mark->exam_type_id)->where('student_id', $mark->student_id)->get()->count();
+                                       
                                     @endphp
+                                    
+            
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ @$mark['assign_subject']['subject']['name'] }}</td>
+                                        <td>{{ @$mark['assign_subject']['subject']['name']}}</td>
                                         <td>{{ @$mark['assign_subject']['full_mark'] }}</td>
                                         <td>{{ @$mark['assign_subject']['pass_mark'] }}</td>
                                         <td>{{ @$obtained_marks }}</td>
                                     @php
+                                       
+                                       
                                         $grade = App\Models\MarksGrade::where([['start_marks', '<=', (int)$obtained_marks], ['end_marks', '>=', (int)$obtained_marks]])->first();
-                                        $grade_name = $grade->grade_name;
-                                        $grade_point = $grade->grade_point;
-                                        $total_grade_point = (float)$total_grade_point + (float)$grade_point;
+                                        
+                                        if ($grade == null) {
+                                            abort(404); 
+                                        }
+                                            $grade_name = $grade->grade_name;
+                                            $grade_point = $grade->grade_point;
+                                            $total_grade_point = (float)$total_grade_point + (float)$grade_point;
+                                            // dd($grade_name);
                                     @endphp
                                         <td>{{ $grade_name }}</td>
                                         <td>{{ $grade_point }}</td>
@@ -158,11 +170,11 @@ Student Marks Entry
                                 @endphp
                                 <tr>
                                     <td>Result</td>
-                                    <td>@if ($count_fail > 0) Fail @else Pass @endif</td>
+                                    <td>@if ($count_fail > 0) Pass @else Fail @endif</td>
                                 </tr>
                                 <tr>
                                     <td>GPA</td>
-                                    <td>@if ($count_fail > 0) 0 @else {{ number_format($gpa,2) }} @endif</td>
+                                    <td>@if ($count_fail > 0) 0.00 @else {{ number_format($gpa,2) }} @endif</td>
                                 </tr>
                                 <tr>
                                     <td>Letter Grade</td>

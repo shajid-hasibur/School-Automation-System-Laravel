@@ -14,13 +14,13 @@ Add Assign Subject
         <div class="col-lg-12">
             <div class="card m-b-30">
                 <div class="card-header">
-                    <h5 class="card-title">Add Assign Subject</h5>
+                    <h5 class="card-title">Add Assign Subject</h5>  
                 </div>
                 <div class="card-body">
                     <form action="{{ route('assign.subject.store') }}" method="POST">
                         @csrf
                         <div class="add_item" id="add_item">
-                            <div class="form-group">
+                            <div class="form-group col-md-4">
                                 <label for="class_id">Class <span class="text-danger">*</span></label>
                                 <select class="form-control" id="class_id" name="class_id">
                                     <option value="">Select Class</option>
@@ -32,7 +32,7 @@ Add Assign Subject
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-row">
+                            <div class="form-row col-md-12">
                                 <div class="form-group col-md-4">
                                     <label for="subject_id">Subject <span class="text-danger">*</span></label>
                                     <select class="form-control" id="subject_id" name="subject_id[]">
@@ -57,12 +57,12 @@ Add Assign Subject
                                     <label for="subjective_mark">Subjective Mark <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="subjective_mark" name="subjective_mark[]" placeholder="Enter Subjective Mark">
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-2" style="margin-top: 33px;">
                                     <span class="btn btn-success addeventmore p-1"><i class="fa fa-plus"></i></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-4">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
 
@@ -77,7 +77,7 @@ Add Assign Subject
 <div style="visibility: hidden;">
     <div class="whole_extra_item_add" id="whole_extra_item_add">
         <div class="delete_whole_extra_item_add" id="delete_whole_extra_item_add">
-            <div class="form-row">
+            <div class="form-row col-md-12">
                 <div class="form-group col-md-4">
                     <label for="subject_id">Subject <span class="text-danger">*</span></label>
                     <select class="form-control" id="subject_id" name="subject_id[]">
@@ -102,7 +102,7 @@ Add Assign Subject
                     <label for="subjective_mark">Subjective Mark <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="subjective_mark" name="subjective_mark[]" placeholder="Enter Subjective Mark">
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-2" style="margin-top: 33px;">
                     <span class="btn btn-success addeventmore p-1"><i class="fa fa-plus"></i></span>
                     <span class="btn btn-danger removeeventmore p-1"><i class="fa fa-close"></i></span>
                 </div>
@@ -117,18 +117,11 @@ Add Assign Subject
             count++;
             var whole_extra_item_add = $("#whole_extra_item_add").html();
             $("#add_item").append(whole_extra_item_add);
-            // var whole_extra_item_add = $("#whole_extra_item_add").html();
-            // $(this).closest(".add_item").append(whole_extra_item_add);
-            // count++;
         });
         $(document).on("click", ".removeeventmore", function() {
             $(this).closest(".delete_whole_extra_item_add").remove();
             count--;
         });
-        // $(document).on("click", ".removeeventmore", function(event) {
-        //     $(this).closest(".delete_whole_extra_item_add").remove();
-        //     count--;
-        // });
     });
 </script>
 @endsection

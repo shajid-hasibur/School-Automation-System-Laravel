@@ -16,6 +16,7 @@ class CreateSchoolSubjectsTable extends Migration
         Schema::create('school_subjects', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('flag')->nullable();
             $table->timestamps();
         });
     }
