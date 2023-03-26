@@ -185,7 +185,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('assign/subject/delete/{class_id}', [AssignSubjectController::class, 'AssignSubjectDelete'])->name('assign.subject.delete');
 
         //Assign additional subject routes
-        Route::get('additional/search/student',[AdditionalSubController::class,'search']);
+        Route::get('additional/search/student',[AdditionalSubController::class,'search'])->name('get.student');
+        Route::get('get/subject',[AdditionalSubController::class,'getSubject'])->name('subject.list');
         Route::resource('additional', AdditionalSubController::class);
 
         //Designation Routes

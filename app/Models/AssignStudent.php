@@ -41,5 +41,6 @@ class AssignStudent extends Model
     {
         return $this->belongsTo(StudentAttendance::class, 'student_id', 'student_id');
     }
+    
 
 }
