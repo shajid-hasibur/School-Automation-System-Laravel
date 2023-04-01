@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend\Marks;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssignStudent;
+use App\Models\AssignSubject;
 use App\Models\ExamType;
 use App\Models\StudentClass;
 use App\Models\StudentMarks;
@@ -33,16 +34,20 @@ class MarksController extends Controller
         $section_id = $request->section_id;
         $assign_subject_id = $request->assign_subject_id;
         $exam_type_id = $request->exam_type_id;
+        
+        
+        // dd($subjectid);
+
+        // $addSubId = AssignStudent::select('add_subject_id');
 
         $markExists= StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->where('assign_subject_id', $assign_subject_id)->where('exam_type_id', $exam_type_id)->exists();
         // dd($markExists);
 
         $students = AssignStudent::with(['student'])->where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->get();
-
+        // dd($students);
         if ($markExists != true) {
             return response()->json($students);
         } else {
-            // $result = 'no';
             return response()->json([
                 'result' => 'no',
             ]);
@@ -74,7 +79,16 @@ class MarksController extends Controller
     //
     public function MarksStore(Request $request)
     {
-            
+        $subjectid = AssignSubject::select('subject_id')->where('id',$request->assign_subject_id)->first();
+         
+        $idCount = count($request->student_id);
+        $idArray = array();
+        for($i = 0; $i < $idCount; $i++){ 
+            $idArray[] = $request->student_id[$i];
+        }
+           
+        $addSubId = AssignStudent::select('add_subject_id')->whereIn('student_id',$idArray)->get();
+        
         $student_count = count($request->student_id);
         if ($student_count) {
             for ($i = 0; $i < $student_count; $i++) {
@@ -85,12 +99,22 @@ class MarksController extends Controller
                 $data->section_id = $request->section_id;
                 $data->year_id = $request->year_id;
                 $data->assign_subject_id = $request->assign_subject_id;
+                if($subjectid->subject_id == $addSubId[$i]['add_subject_id']) 
+                {
+                    $data->add_subject_id = $addSubId[$i]['add_subject_id'];
+                }
+                else
+                {
+                    $data->add_subject_id = null;
+                }
                 $data->exam_type_id = $request->exam_type_id;
                 $data->descriptive_mark = $request->descriptive_mark[$i];
                 $data->objective_mark = $request->objective_mark[$i];
                 $data->practical_mark = $request->practical_mark[$i];
                 $data->total_mark = $data->descriptive_mark+$data->objective_mark+$data->practical_mark;
-                $data->save();  
+                // dd($data);
+                $data->save();
+                  
             }
         }
 
@@ -130,6 +154,16 @@ class MarksController extends Controller
     //
     public function MarksUpdate(Request $request)
     {
+        $subjectid = AssignSubject::select('subject_id')->where('id',$request->assign_subject_id)->first();
+         
+        $idCount = count($request->student_id);
+        $idArray = array();
+        for($i = 0; $i < $idCount; $i++){ 
+            $idArray[] = $request->student_id[$i];
+        }
+           
+        $addSubId = AssignStudent::select('add_subject_id')->whereIn('student_id',$idArray)->get();
+
         StudentMarks::where('year_id', $request->year_id)->where('class_id', $request->class_id)->where('section_id', $request->section_id)->where('assign_subject_id', $request->assign_subject_id)->where('exam_type_id', $request->exam_type_id)->delete();
         $student_count = count($request->student_id);
         if ($student_count) {
@@ -141,8 +175,15 @@ class MarksController extends Controller
                 $data->year_id = $request->year_id;
                 $data->section_id = $request->section_id;
                 $data->assign_subject_id = $request->assign_subject_id;
+                if($subjectid->subject_id == $addSubId[$i]['add_subject_id']) 
+                {
+                    $data->add_subject_id = $addSubId[$i]['add_subject_id'];
+                }
+                else
+                {
+                    $data->add_subject_id = null;
+                }
                 $data->exam_type_id = $request->exam_type_id;
-                // $data->marks = $request->marks[$i];
                 $data->descriptive_mark = $request->descriptive_mark[$i];
                 $data->objective_mark = $request->objective_mark[$i];
                 $data->practical_mark = $request->practical_mark[$i];

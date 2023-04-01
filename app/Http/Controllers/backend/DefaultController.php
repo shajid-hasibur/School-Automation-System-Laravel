@@ -15,6 +15,12 @@ class DefaultController extends Controller
         $class_id = $request->class_id;
         $subjects = AssignSubject::with(['subject'])->where('class_id', $class_id)->get();
         return response()->json($subjects);
+
+        // $class_id = $request->class_id;
+        // $subjects = AssignSubject::with(['subject'])->whereHas('subject',function($query){
+        //     $query->where('flag',null);
+        // })->where('class_id', $class_id)->get();
+        // return response()->json($subjects);
     }
 
     //

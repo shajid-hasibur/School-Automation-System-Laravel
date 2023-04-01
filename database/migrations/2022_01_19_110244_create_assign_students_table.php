@@ -22,6 +22,7 @@ class CreateAssignStudentsTable extends Migration
             $table->integer('group_id')->nullable();
             $table->integer('section_id')->nullable();
             $table->integer('shift_id');
+            $table->integer('add_subject_id')->nullable();
             $table->timestamps();
         });
     }

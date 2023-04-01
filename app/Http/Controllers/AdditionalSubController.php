@@ -45,10 +45,10 @@ class AdditionalSubController extends Controller
         return response()->json($students);
     }
 
-    public function getSubject(){
-        $subjects = SchoolSubject::all();
-        return response()->json($subjects);
-    }
+    // public function getSubject(){
+    //     $subjects = SchoolSubject::all();
+    //     return response()->json($subjects);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -58,7 +58,23 @@ class AdditionalSubController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'add_subject_id' => 'required'
+        ],
+
+        [
+            'add_subject_id.required' => 'Please select a subject before submit'
+        ]);
+
+        $student = AssignStudent::where('student_id', $request->student_id)->first();
+        $student->add_subject_id = $request->add_subject_id;
+        $student->save();
+        // dd($student);
+        $notification = array(
+            'message' => 'Additional subject assigned Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
     }
 
     /**
@@ -69,7 +85,7 @@ class AdditionalSubController extends Controller
      */
     public function show($id)
     {
-        $student_data = AssignStudent::with(['student','group','student_class','student_year','student_section','student_shift'])
+        $student_data = AssignStudent::with(['student','group','student_class','student_year','student_section','student_shift','subject'])
         ->where('student_id',$id)
         ->first();
 

@@ -33,18 +33,19 @@ class MarksheetController extends Controller
         $exam_type_id = $request->exam_type_id;
         $id_no = $request->id_no;
 
-        // $subject_flag = StudentMarks::with(['assign_subject' => function($sub){
-        //     $sub->where('id','assign_subject_id');
-        // }])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->where('total_mark', '<', '33')->get();
-        // dd($subject_flag);
-        $count_fail = StudentMarks::with(['assign_subject'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->where('total_mark', '<', '33')->get()->count();
+       
+        $count_fail = StudentMarks::with(['assign_subject'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->whereNull('add_subject_id')->where('total_mark', '<', '33')->get()->count();
         // dd($count_fail);
+        $additional_fail = StudentMarks::with(['assign_subject'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->whereNotNull('add_subject_id')->where('total_mark', '<', '33')->get()->count();
+        // dd($additional_fail);
         $student_single = StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->first();
         if ($student_single == true) {
-            $allMarks = StudentMarks::with(['assign_subject', 'year'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->get();
+            $allMarks = StudentMarks::with(['assign_subject', 'year'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->whereNull('add_subject_id')->get();
             // dd($allMarks->toArray());
+            $addSubMark = StudentMarks::with(['assign_subject'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->whereNotNull('add_subject_id')->first();
+            // dd($addSubMark);
             $allGrades = MarksGrade::all();
-            return view('backend.report.marksheet.marksheet_pdf', compact('allMarks', 'allGrades', 'count_fail'));
+            return view('backend.report.marksheet.marksheet_pdf', compact('allMarks', 'allGrades', 'count_fail','addSubMark','additional_fail'));
         }else{
             $notification = array(
                 'message' => 'No Record Found!',

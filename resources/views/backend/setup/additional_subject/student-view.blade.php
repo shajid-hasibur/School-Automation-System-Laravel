@@ -20,17 +20,23 @@ Assign Additional Subject
                         <span>Student Roll: {{ $student_data->roll }}</span><br>
                         <span>Group: <mark style="background-color: yellow">{{ $student_data['group']['group_name'] }}</mark></span><br>
                         <span>Shift: {{ $student_data['student_shift']['shift_name'] }}</span><br>
-                        <span>Section: {{ $student_data['student_section']['section_name'] }}</span><br><br>
+                        <span>Section: {{ $student_data['student_section']['section_name'] }}</span><br>
+                        <strong><span>Additional Subject: <mark style="background-color: yellow">{{ @$student_data['subject']['name'] }}</mark></span></strong><br>
                     </div>
                     <div class="col-md-6">
-                       <form action="#" method="">
+                       <form action="{{ route('additional.store') }}" method="POST">
+                        @csrf
+                            <input type="hidden" name="student_id" value="{{ $student_data->student_id}}">
                             <label>Subjects :</label>
-                            <select class="form-control" name="" id="">
+                            <select class="form-control" name="add_subject_id">
                                 <option value="">Select Additional Subject</option>
                                 @foreach ($additional_subjects as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
+                            @error('add_subject_id')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             <div style="float: right; margin-top: 20px;">
                                 <button type="submit" class="btn btn-success">Submit</button>
                             </div>

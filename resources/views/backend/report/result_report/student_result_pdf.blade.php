@@ -484,6 +484,11 @@
                                     ->where('student_id', $mark->student_id)
                                     ->get()
                                     ->count();
+                                // $additional_subject = App\Models\AssignStudent::where('year_id',$mark->year_id)
+                                // ->where('class_id',$mark->class_id)
+                                // ->where('student_id',$mark->student_id)
+                                // ->first();
+                                // dd($additional_subject);     
                             @endphp
                             <tr>
                                 <td>{{ $key + 1 }}</td>

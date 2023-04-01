@@ -41,6 +41,10 @@ class AssignStudent extends Model
     {
         return $this->belongsTo(StudentAttendance::class, 'student_id', 'student_id');
     }
+    public function subject()
+    {
+        return $this->belongsTo(SchoolSubject::class, 'add_subject_id','id');
+    }
     
 
 }
