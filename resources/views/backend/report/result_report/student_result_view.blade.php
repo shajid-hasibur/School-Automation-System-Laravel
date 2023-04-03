@@ -17,7 +17,7 @@ Student Result Report
                 <div class="card-body">
                     <form method="GET" action="{{ route('report.result.get') }}">
                         <div class="form-row">
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <label for="year_id">Year</label>
                                 <select id="year_id" name="year_id" class="form-control">
                                     <option selected disabled>Choose...</option>
@@ -26,7 +26,7 @@ Student Result Report
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <label for="class_id">Class</label>
                                 <select id="class_id" name="class_id" class="form-control">
                                     <option selected disabled>Choose...</option>
@@ -35,7 +35,7 @@ Student Result Report
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 <label for="exam_type_id">Exam</label>
                                 <select id="exam_type_id" name="exam_type_id" class="form-control">
                                     <option selected disabled>Choose...</option>
@@ -44,13 +44,12 @@ Student Result Report
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-2">
-                                <label for="id_no">ID No</label>
+                            <div class="form-group col-md-3">
+                                <label for="id_no">Student Id</label>
                                 <input type="text" id="id_no" name="id_no" class="form-control">
                             </div>
                             <div class="form-group col-md-2">
-                                <!-- <a id="search" name="search" class="btn btn-rounded btn-outline-info mt-3 ml-5 p-3">Search</a> -->
-                                <button type="submit" class="btn btn-rounded btn-outline-info mt-3 ml-5 p-3">Search</button>
+                                <button type="submit" class="btn btn-primary">Search</button>
                             </div>
                         </div>
                     </form>

@@ -104,8 +104,6 @@ Student Marks Entry
                                     <th>Grade Point</th>
                                 </thead>
                                 <tbody>
-                                   
-
                                     @php
                                     $total_marks = 0;
                                     $total_grade_point = 0;
@@ -119,17 +117,13 @@ Student Marks Entry
                                         $bonusPoint = $grade1->grade_point-2;
                                     }
                                     
-                                    // dd($bonusPoint);
                                     @endphp
                                     @foreach ($allMarks as $key => $mark)
                                     @php
                                         $obtained_marks = $mark->total_mark;
                                         $total_marks = (float)$total_marks + (float)$obtained_marks;
                                         $total_subject = App\Models\StudentMarks::where('year_id', $mark->year_id)->where('class_id', $mark->class_id)->where('exam_type_id', $mark->exam_type_id)->where('add_subject_id',$mark->add_subject_id)->where('student_id', $mark->student_id)->get()->count();
-                                    //    dd($total_subject);
                                     @endphp
-                                    
-            
                                     <tr>
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ @$mark['assign_subject']['subject']['name']}}</td>
@@ -137,8 +131,6 @@ Student Marks Entry
                                         <td>{{ @$mark['assign_subject']['pass_mark'] }}</td>
                                         <td>{{ @$obtained_marks }}</td>
                                     @php
-                                       
-                                       
                                         $grade = App\Models\MarksGrade::where([['start_marks', '<=', (int)$obtained_marks], ['end_marks', '>=', (int)$obtained_marks]])->first();
                                         
                                         if ($grade == null) {
@@ -148,7 +140,6 @@ Student Marks Entry
                                             $grade_point = $grade->grade_point;
                                             
                                             $total_grade_point = (float)$total_grade_point + (float)$grade_point;
-                                            // dd($bonusPoint);
                                     @endphp
                                         <td>{{ $grade_name }}</td>
                                         <td>{{ $grade_point }}</td>
@@ -188,18 +179,11 @@ Student Marks Entry
                                         <td>{{ @$addSubMark['assign_subject']['pass_mark'] }}</td>
                                         <td>{{ @$addSubMark->total_mark }}</td>
                                         @php
-                                        // $subject_mark = $addSubMark->total_mark; 
-                                        // $grade1 = App\Models\MarksGrade::where([['start_marks', '<=', (int)$subject_mark], ['end_marks', '>=', (int)$subject_mark]])->first();
-                                        
                                         if ($grade1 == null) {
                                             abort(404); 
                                         }
                                             $grade_name1 = $grade1->grade_name;
                                             $grade_point1 = $grade1->grade_point;
-                                            // $bonusPoint = $grade1->grade_point-2;
-                                            // dd($bonusPoint);
-                                            // $total_grade_point1 = (float)$total_grade_point1 + (float)$grade_point1;
-                                            // dd($grade_name);
                                         @endphp
                                         <td>{{ $grade_name1 }}</td>
                                         <td>{{ $grade_point1 }}</td>
@@ -217,8 +201,8 @@ Student Marks Entry
                                     $total_grade = 0;
                                     $point_for_letter_grade = (float)$finalPoint/(float)$total_subject;
                                     $total_grade = App\Models\MarksGrade::where([['start_point', '<=', (int)$point_for_letter_grade], ['end_point', '>=', (int)$point_for_letter_grade]])->first();
-                                    $allPoint = $total_grade_point+$bonusPoint;
-                                    $gpa = (float)$allPoint/(float)$total_subject;
+                                    // $allPoint = $total_grade_point+$bonusPoint;
+                                    $gpa = (float)$finalPoint/(float)$total_subject;
                                 @endphp
                                 <tr>
                                     <td>Result</td>

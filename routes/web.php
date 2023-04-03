@@ -186,7 +186,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Assign additional subject routes
         Route::get('additional/search/student',[AdditionalSubController::class,'search'])->name('get.student');
-        // Route::get('get/subject',[AdditionalSubController::class,'getSubject'])->name('subject.list');
+        Route::get('get/student',[AdditionalSubController::class,'getStudent'])->name('student.list');
         Route::resource('additional', AdditionalSubController::class);
 
         //Designation Routes

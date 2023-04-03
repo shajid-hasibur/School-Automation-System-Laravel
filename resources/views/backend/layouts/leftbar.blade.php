@@ -147,7 +147,7 @@ $array = $user['permission'];
                     </a>
                     <ul class="vertical-submenu">
 
-                        <li><a href="{{ route('report.marksheet.generate.view') }}">Marksheet Generate</a></li>
+                        <li><a href="{{ route('report.marksheet.generate.view') }}">Marksheet</a></li>
 
                         <li><a href="{{ route('report.student.result.view') }}">Student Result</a></li>
                         <li><a href="{{ route('report.student.idcard.view') }}">Student ID Card</a></li>

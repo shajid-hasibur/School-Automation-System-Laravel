@@ -18,7 +18,10 @@ class AdditionalSubController extends Controller
      */
     public function index()
     {
-        return view('backend.setup.additional_subject.index');
+        $data['classes'] = StudentClass::all();
+        $data['years'] = StudentYear::all();
+        $data['groups'] = StudentGroup::all();
+        return view('backend.setup.additional_subject.index',$data);
     }
 
     /**
@@ -45,10 +48,14 @@ class AdditionalSubController extends Controller
         return response()->json($students);
     }
 
-    // public function getSubject(){
-    //     $subjects = SchoolSubject::all();
-    //     return response()->json($subjects);
-    // }
+    public function getStudent(Request $request){
+       $students = AssignStudent::with(['student','group','student_class','subject'])
+       ->where('year_id', $request->year_id)
+       ->where('class_id', $request->class_id)
+       ->where('group_id', $request->group_id)
+       ->get();
+       return response()->json($students);
+    }
 
     /**
      * Store a newly created resource in storage.

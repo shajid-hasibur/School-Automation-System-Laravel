@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Employee Salary Details</title>
+    <title>Student result pdf</title>
     <style>
         .container {
             padding-right: 15px;
@@ -367,6 +367,7 @@
             border: 1px solid black;
             text-align: left;
         }
+        
     </style>
 </head>
 
@@ -431,14 +432,14 @@
                 </table>
             </div>
 
-            <div class="col-md-6 offset-md-4">
+            <div class="col-md-6">
                 <table class="table design" id="result"  style="border-collapse: collapse;">
                     <caption><strong>Letter Grade</strong></caption>
                     <thead>
                         <tr>
-                        <th>Letter Grade</th>
-                        <th>Marks Interval</th>
-                        <th>Grade Point</th>
+                            <th>Grade</th>
+                            <th>Marks Interval</th>
+                            <th>Grade Point</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -456,23 +457,34 @@
         <br>
         <div class="row">
             <div class="col-md-12">
+                <caption><strong>Result List</strong></caption>
+                <mark style="background-color: yellow"><strong>Compulsory Subject Result</strong></mark>
                 <table class="table design" id="result"  style="border-collapse: collapse;">
-                    <caption><strong>Result List</strong></caption>
+                    
                     <thead>
                         <tr>
-                        <th>Sl</th>
-                        <th>Subject</th>
-                        <th>Full Marks</th>
-                        <th>Pass Marks</th>
-                        <th>Obtained Marks</th>
-                        <th>Grade</th>
-                        <th>Grade Point</th>
+                            <th>Sl</th>
+                            <th>Subject</th>
+                            <th>Full Marks</th>
+                            <th>Pass Marks</th>
+                            <th>Obtained Marks</th>
+                            <th>Grade</th>
+                            <th>Grade Point</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $total_marks = 0;
                             $total_grade_point = 0;
+                            $bonusPoint = 0;
+                            $subject_mark = @$addSubMark->total_mark; 
+                            $grade1 = App\Models\MarksGrade::where([['start_marks', '<=', (int)$subject_mark], ['end_marks', '>=', (int)$subject_mark]])->first();
+                            if ($grade1->grade_point == 0) {
+                                    $bonusPoint = 0;
+                                }
+                            elseif($grade1->grade_point >= 2){
+                                    $bonusPoint = $grade1->grade_point-2;
+                                }
                         @endphp
                         @foreach ($allMarks as $key => $mark)
                             @php
@@ -482,13 +494,9 @@
                                     ->where('class_id', $mark->class_id)
                                     ->where('exam_type_id', $mark->exam_type_id)
                                     ->where('student_id', $mark->student_id)
+                                    ->where('add_subject_id',$mark->add_subject_id)
                                     ->get()
-                                    ->count();
-                                // $additional_subject = App\Models\AssignStudent::where('year_id',$mark->year_id)
-                                // ->where('class_id',$mark->class_id)
-                                // ->where('student_id',$mark->student_id)
-                                // ->first();
-                                // dd($additional_subject);     
+                                    ->count();   
                             @endphp
                             <tr>
                                 <td>{{ $key + 1 }}</td>
@@ -508,6 +516,46 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="text-align: right;">Total Marks</td>
+                            <td>{{ $total_marks }}</td>
+                            <td colspan="" style="text-align: right;">Total Points</td>
+                            <td>{{ $total_grade_point+$bonusPoint }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <mark style="background-color: yellow"><strong>Additional Subject Result</strong></mark>
+                <table class="table design" style="border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th>Sl</th>
+                            <th>Subject</th>
+                            <th>Full Marks</th>
+                            <th>Pass Marks</th>
+                            <th>Obtained Marks</th>
+                            <th>Grade</th>
+                            <th>Grade Point</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ 1 }}</td>
+                            <td>{{ @$addSubMark['assign_subject']['subject']['name'] }}</td>
+                            <td>{{ @$addSubMark['assign_subject']['full_mark'] }}</td>
+                            <td>{{ @$addSubMark['assign_subject']['pass_mark'] }}</td>
+                            <td>{{ @$addSubMark->total_mark }}</td>
+                            @php
+                            if ($grade1 == null) {
+                                abort(404); 
+                            }
+                                $grade_name1 = $grade1->grade_name;
+                                $grade_point1 = $grade1->grade_point;
+                            @endphp
+                            <td>{{ $grade_name1 }}</td>
+                            <td>{{ $grade_point1 }}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -517,30 +565,33 @@
                 <table class="table design" id="result"  style="border-collapse: collapse;">
                     <caption><strong>Result</strong></caption>
                     @php
+                        $finalPoint = $total_grade_point+$bonusPoint;
                         $total_grade = 0;
-                        $point_for_letter_grade = (float) $total_grade_point / (float) $total_subject;
+                        $point_for_letter_grade = (float) $finalPoint / (float) $total_subject;
                         $total_grade = App\Models\MarksGrade::where([['start_point', '<=', (int) $point_for_letter_grade], ['end_point', '>=', (int) $point_for_letter_grade]])->first();
-                        $gpa = (float) $total_grade_point / (float) $total_subject;
+
+                        $gpa = (float) $finalPoint / (float) $total_subject;
                     @endphp
                     <tr>
                         <td>Result</td>
-                        <td>
-                            @if ($count_fail > 0)
-                                Fail
+                        <td>@if ($count_fail > 0 && $additional_fail > 0)
+                             Fail 
+                            @elseif ($count_fail > 0 && $additional_fail == 0)
+                             Fail
                             @else
-                                Pass
-                            @endif
-                        </td>
+                             Pass 
+                            @endif</td>
                     </tr>
                     <tr>
                         <td>GPA</td>
-                        <td>
-                            @if ($count_fail > 0)
-                                0
-                            @else
-                                {{ number_format($gpa, 2) }}
-                            @endif
-                        </td>
+                        <td>@if ($count_fail > 0 && $additional_fail > 0)
+                             0.00
+                            @elseif ($count_fail > 0 && $additional_fail == 0)
+                             0.00 
+                            @elseif ($gpa >=5)
+                             5.00
+                            @else{{ number_format($gpa,2) }} 
+                            @endif</td>
                     </tr>
                     <tr>
                         <td>Letter Grade</td>
@@ -570,7 +621,7 @@
                 </table>
             </div>
         </div>
-        <br><br><br>
+        <br><br>
         <div class="row">
             <div class="col-md-3 ">
                 <hr style="border: solid 1px; margin-bottom: -2px">

@@ -31,17 +31,19 @@ class ResultReportController extends Controller
         $exam_type_id = $request->exam_type_id;
         $id_no = $request->id_no;
 
-        $count_fail = StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->where('total_mark', '<', '33')->get()->count();
+        $count_fail = StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->whereNull('add_subject_id')->where('total_mark', '<', '33')->get()->count();
         // dd($count_fail);
+        $additional_fail = StudentMarks::with(['assign_subject'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->whereNotNull('add_subject_id')->where('total_mark', '<', '33')->get()->count();
         $single_result = StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->first();
 
         if ($single_result == true) {
             $allData = StudentMarks::select('year_id', 'class_id', 'exam_type_id', 'student_id')->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->groupBy('year_id')->groupBy('class_id')->groupBy('exam_type_id')->groupBy('student_id')->get();
             //
-            $allMarks = StudentMarks::with(['assign_subject', 'year'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->get();
+            $allMarks = StudentMarks::with(['assign_subject', 'year'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->whereNull('add_subject_id')->get();
+            $addSubMark = StudentMarks::with(['assign_subject'])->where('year_id', $year_id)->where('class_id', $class_id)->where('exam_type_id', $exam_type_id)->where('id_no', $id_no)->whereNotNull('add_subject_id')->first();
             $allGrades = MarksGrade::all();
             // dd($data['allData']->toArray());
-            $pdf = PDF::loadView('backend.report.result_report.student_result_pdf', compact('allMarks', 'allData', 'allGrades', 'count_fail'));
+            $pdf = PDF::loadView('backend.report.result_report.student_result_pdf', compact('allMarks', 'allData', 'allGrades', 'count_fail','additional_fail','addSubMark'));
             $pdf->SetProtection(['copy', 'print'], '', 'pass');
             return $pdf->stream('student_result_report.pdf');
         }else{

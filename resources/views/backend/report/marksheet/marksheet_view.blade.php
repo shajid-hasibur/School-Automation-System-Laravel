@@ -22,7 +22,7 @@ Student Marks Entry
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <label for="year_id"><strong>Year</strong></label>
+                                <label for="year_id">Year</label>
                                 <select id="year_id" name="year_id" class="form-control">
                                     <option selected="">Choose...</option>
                                     @foreach ($years as $year)
@@ -31,7 +31,7 @@ Student Marks Entry
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="class_id"><strong>Class</strong></label>
+                                <label for="class_id">Class</label>
                                 <select id="class_id" name="class_id" class="form-control">
                                     <option selected="">Choose...</option>
                                     @foreach ($classes as $class)
@@ -40,7 +40,7 @@ Student Marks Entry
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="exam_type_id"><strong>Exam</strong></label>
+                                <label for="exam_type_id">Exam</label>
                                 <select id="exam_type_id" name="exam_type_id" class="form-control">
                                     <option selected="">Choose...</option>
                                     @foreach ($exam_types as $exam)
@@ -49,11 +49,11 @@ Student Marks Entry
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="id_no"><strong>ID No</strong> </label>
+                                <label for="id_no">Student Id</label>
                                 <input type="text" name="id_no" id="id_no" class="form-control">
                             </div>
                             <div class="form-group col-md-3">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Search</button>
                             </div>
                     </form>
                 </div>
