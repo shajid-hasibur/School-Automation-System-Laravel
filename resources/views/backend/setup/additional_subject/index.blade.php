@@ -57,10 +57,10 @@ Assign Additional Subject
                     <div class="d-none" id="student-table">
                         <div class="col-md-12">
                             <table class="table table-primary table-bordered">
-                                <thead>
+                                <thead class="table table-dark">
                                     <tr>
                                         <th>Student Name</th>
-                                        <th>Id</th>
+                                        <th>Student Id</th>
                                         <th>Class</th>
                                         <th>Group</th>
                                         <th>Additional Subject</th>

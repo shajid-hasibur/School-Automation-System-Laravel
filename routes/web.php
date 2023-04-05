@@ -42,6 +42,7 @@ use App\Http\Controllers\backend\Student\MonthlyFeeController;
 use App\Http\Controllers\backend\Student\RegistrationFeeController;
 use App\Http\Controllers\backend\Student\StudentRegistrationController;
 use App\Http\Controllers\backend\UserController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -385,7 +386,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
-
+    Route::get('make/student/payment',[PaymentController::class,'create'])->name('student.payment.create');
+    Route::get('student/payment/search',[PaymentController::class,'searchStudent'])->name('student.payment.search');
 
 
 });

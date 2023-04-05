@@ -34,7 +34,7 @@ class StudentFeeController extends Controller
         $section_id =$request->section_id;
         $fee_category_id =$request->fee_category_id;
         $date = date('Y-m', strtotime($request->date));
-
+        // dd($date);
         $data = AssignStudent::where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->get();
         // dd($data);
 
@@ -52,7 +52,7 @@ class StudentFeeController extends Controller
         foreach($data as $key => $value){
             $registration_fee = FeeCategoryAmount::where('fee_category_id', $fee_category_id)->where('class_id', $value->class_id)->first();
             $accountstudentsfee = AccountStudentFee::where('student_id', $value->student_id)->where('year_id', $value->year_id)->where('class_id', $value->class_id)->where('section_id', $value->section_id)->where('fee_category_id', $fee_category_id)->where('date', $date)->first();
-
+            // dd($accountstudentsfee);
             if ($accountstudentsfee != null) {
                 $status = '<strong class="badge badge-success">Paid</strong>';
             }else{
@@ -66,7 +66,7 @@ class StudentFeeController extends Controller
             $html[$key]['tdsource'] .= '<td>'.$value['student_section']['section_name'].'</td>';
             $html[$key]['tdsource'] .= '<td>'.$registration_fee['fee_category']['name'].'</td>';
             $html[$key]['tdsource'] .= '<td>'.$registration_fee->amount.'</td>';
-            $html[$key]['tdsource'] .= '<td>'.date('M-Y', $value->date).'</td>';
+            $html[$key]['tdsource'] .= '<td>'.$date.'</td>';
             $html[$key]['tdsource'] .= '<td>'.$status.'</td>';
         }
         return response()->json(@$html);

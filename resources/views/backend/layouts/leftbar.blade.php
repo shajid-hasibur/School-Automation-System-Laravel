@@ -133,6 +133,7 @@ $array = $user['permission'];
                     </a>
                     <ul class="vertical-submenu">
                         <li><a href="{{ route('student.fee.view') }}">Student Fee</a></li>
+                        <li><a href="{{ route('student.payment.create') }}">Student Payment</a></li>
                         <li><a href="{{ route('account.salary.view') }}">Employee Salary</a></li>
                         <li><a href="{{ route('account.other.view') }}">Others</a></li>
                     </ul>
