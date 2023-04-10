@@ -3,7 +3,7 @@ Student Fee
 @endsection
 @extends('backend.layouts.master')
 @section('style')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 @endsection
 @section('rightbar-content')
 <div class="contentbar">
@@ -15,7 +15,7 @@ Student Fee
                         <h5 class="card-title">Student Search</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('student.payment.store') }}" method="POST">
+                        <form action="{{ route('student.payment.store') }}" method="POST" id="payment-form">
                             @csrf
                             <div class="form-row">
                                     <div class="form-group col-md-3">
@@ -50,7 +50,7 @@ Student Fee
                                         <input type="text" name="id_no" id="id_no" class="form-control">
                                     </div>
                                     <div class="form-group col-md-3">
-                                    <button type="button" id="search" class="btn btn-success" style="margin-top: 31px;">Search</button>
+                                    <button type="button" id="search" class="btn btn-success">Search</button>
                                     </div>
                             </div>
                             <div class="d-none" id="student-data">
@@ -99,7 +99,7 @@ Student Fee
                                         <input type="date" name="payment_date" class="form-control">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <button type="submit" class="btn btn-primary">Confirm Payment</button>
+                                        <button type="submit" id="exambutton" class="btn btn-primary">Confirm Payment</button>
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +169,8 @@ Student Fee
                         '<br>'+
                         '<span><strong>Discount Amount :</strong> '+response.discount_amount+'</span>'+
                         '<br>'+
-                        '<span><strong>Amount For This Student :</strong> '+response.final_amount+'</span>'+
+                        '<span><mark style="background-color:yellow;"><strong>Amount For This Student :</strong> '+response.final_amount+'</mark></span>'+
+                        '<input type="hidden" name="amount" value="' + response.final_amount + '"/>' +
                         '<br>'+
                         '<br>'+
                         '<button type="button" class="btn btn-warning" id="payment-button">Take Payment</button>'
@@ -179,6 +180,7 @@ Student Fee
         });
     });
 </script>
+
 <script>
     $(document).on('click','#payment-button',function(){
         let fee_category_id = $('#fee_category_id').val();
@@ -213,6 +215,17 @@ Student Fee
             }
         });
     });
-</script>    
+</script>
+
+<script>
+    $(document).on('click','#exambutton',function(){
+        let examInput = $('#exam_type_id').val();
+        if(examInput == '')
+        {
+            $('#exam_type_id').attr('required',true);
+        }
+    });
+</script>
+
 </div>
 @endsection

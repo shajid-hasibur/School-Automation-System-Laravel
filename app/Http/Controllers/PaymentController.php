@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountStudentFee;
 use App\Models\AssignStudent;
 use App\Models\ExamType;
 use App\Models\FeeCategory;
@@ -51,6 +52,49 @@ class PaymentController extends Controller
     }
 
     public function store(Request $request){
-        dd($request->all());
+        // dd($request->all());
+        $data = new AccountStudentFee();
+        $data->year_id = $request->year_id;
+        $data->class_id = $request->class_id;
+        $data->student_id = $request->student_id;
+        $data->fee_category_id = $request->fee_category_id;
+        $data->date = $request->date;
+        $data->payment_date = now();
+        $data->amount = $request->amount;
+        $data->save();
+
+        $notification = array(
+            'message' => 'Payment data successfully saved',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+    //return the payment history view
+    public function index(){
+        $data['years'] = StudentYear::all();
+        $data['classes'] = StudentClass::all();
+        $data['fees'] = FeeCategory::all();
+        return view('backend.account.student_fee.payment_history',$data);
+    }
+
+    public function studentData(Request $request){
+        $user_data = User::where('id_no',$request->id_no)->first();
+        $student_data = AssignStudent::with('student','student_class','student_year','group','discount')
+        ->where('year_id',$request->year_id)
+        ->where('class_id',$request->class_id)
+        ->where('student_id',$user_data->id)
+        ->first();
+        $student_account = AccountStudentFee::where('year_id',$request->year_id)
+        ->where('class_id',$request->class_id)
+        ->where('student_id',$user_data->id)
+        ->where('fee_category_id',$request->fee_category_id)
+        ->selectRaw('year(created_at) year, monthname(created_at) month, count(*) data')
+        ->groupBy('year', 'month')
+        // ->groupBy('date')
+        ->get();
+        return response()->json([
+            'student' => $student_data,
+            'student_acc' => $student_account
+        ]);
     }
 }

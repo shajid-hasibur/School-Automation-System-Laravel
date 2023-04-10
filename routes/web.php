@@ -386,6 +386,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
+    //payment controller
+
     Route::get('make/student/payment',[PaymentController::class,'create'])->name('student.payment.create');
 
     Route::get('student/payment/search',[PaymentController::class,'searchStudent'])->name('student.payment.search');
@@ -393,6 +395,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('student/fee/search',[PaymentController::class,'feeData'])->name('student.fee.search');
 
     Route::POST('student/payment/store',[PaymentController::class,'store'])->name('student.payment.store');
+
+    Route::get('student/payment/history',[PaymentController::class,'index'])->name('student.payment.history');
+
+    Route::get('student/payment/data',[PaymentController::class,'studentData'])->name('student.payment.data');
 
 
 });
