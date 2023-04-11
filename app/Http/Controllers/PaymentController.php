@@ -88,10 +88,10 @@ class PaymentController extends Controller
         ->where('class_id',$request->class_id)
         ->where('student_id',$user_data->id)
         ->where('fee_category_id',$request->fee_category_id)
+        ->whereYear('created_at',$request->year)
         ->selectRaw('year(created_at) year, monthname(created_at) month, count(*) data')
         ->groupBy('year', 'month')
-        // ->groupBy('date')
-        ->get();
+        ->first();
         return response()->json([
             'student' => $student_data,
             'student_acc' => $student_account

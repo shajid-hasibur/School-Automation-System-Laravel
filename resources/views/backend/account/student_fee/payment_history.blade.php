@@ -4,6 +4,9 @@ Student Payment History
 @extends('backend.layouts.master')
 @section('style')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 @endsection
 @section('rightbar-content')
 <div class="contentbar">
@@ -50,7 +53,7 @@ Student Payment History
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="">Payment Year</label>
-                                <input type="date" class="form-control">
+                                <input type="text" id="year" name="year" class="yearpicker form-control" value="">
                             </div>
                             <div class="form-group col-md-3">
                                 <button type="button" id="search" class="btn btn-success" style="margin-top: 31px;">Search</button>
@@ -72,6 +75,7 @@ Student Payment History
         let class_id = $('#class_id').val();
         let id_no = $('#id_no').val();
         let fee_category_id = $('#fee_category_id').val();
+        let year = $('#year').val();
         
         $.ajax({
             url: "{{ route('student.payment.data') }}",
@@ -81,8 +85,10 @@ Student Payment History
                 'class_id':class_id,
                 'id_no':id_no,
                 'fee_category_id': fee_category_id,
+                'year':year,
             },
             success:function(response){
+                // alert(response.student_acc.month);
                 let html = '';
                 $('#student-data').removeClass('d-none');
                 html += '<h3>Student Information</h3>'+
@@ -109,6 +115,12 @@ Student Payment History
         });
 
     });
-</script>    
+</script>
+<script>
+   $('.yearpicker').datepicker({
+        minViewMode: 2,
+        format:'yyyy'
+   });
+</script> 
 </div>
 @endsection

@@ -66,7 +66,7 @@ Student Fee
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label><strong>Month</strong></label>
-                                        <input type="month" name="date" class="form-control">
+                                        <input type="date" name="date" class="form-control">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label><strong>Payment Date</strong></label>
@@ -132,6 +132,8 @@ Student Fee
         let class_id = $('#class_id').val();
         let id_no = $('#id_no').val();
         let fee_category_id = $('#fee_category_id').val();
+
+        
         $.ajax({
             url: "{{ route('student.payment.search') }}",
             type: "GET",
@@ -226,6 +228,5 @@ Student Fee
         }
     });
 </script>
-
 </div>
 @endsection
