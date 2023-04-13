@@ -58,6 +58,7 @@ class PaymentController extends Controller
         $data->class_id = $request->class_id;
         $data->student_id = $request->student_id;
         $data->fee_category_id = $request->fee_category_id;
+        $data->exam_type_id = $request->exam_type_id;
         $data->date = $request->date;
         $data->payment_date = now();
         $data->amount = $request->amount;
@@ -78,23 +79,33 @@ class PaymentController extends Controller
     }
 
     public function studentData(Request $request){
+        dd($request->all());
         $user_data = User::where('id_no',$request->id_no)->first();
-        $student_data = AssignStudent::with('student','student_class','student_year','group','discount')
+        $student_data = AccountStudentFee::with('student','student_class','student_year','fee_category','discount')
         ->where('year_id',$request->year_id)
         ->where('class_id',$request->class_id)
+        ->where('fee_category_id',$request->fee_category_id)
         ->where('student_id',$user_data->id)
         ->first();
+
         $student_account = AccountStudentFee::where('year_id',$request->year_id)
         ->where('class_id',$request->class_id)
         ->where('student_id',$user_data->id)
         ->where('fee_category_id',$request->fee_category_id)
-        ->whereYear('created_at',$request->year)
-        ->selectRaw('year(created_at) year, monthname(created_at) month, count(*) data')
+        ->whereYear('date',$request->year)
+        ->selectRaw('year(date) year, monthname(date) month, count(*) data')
         ->groupBy('year', 'month')
-        ->first();
+        ->get();
+
+        if($request->fee_category_id == 4){
+            
+        }
+
+
+       
         return response()->json([
             'student' => $student_data,
-            'student_acc' => $student_account
+            'student_acc' => $student_account,
         ]);
     }
 }

@@ -62,8 +62,20 @@ Student Payment History
                         <div class="d-none" id="student-data">
 
                         </div>
+                        <br><br><div class="d-none" id="payment-data">
+                            <table class="table table-primary">
+                                <thead class="table table-dark">
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Month</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payment-table">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    
                 </div>
             </div>    
         </div>    
@@ -88,17 +100,31 @@ Student Payment History
                 'year':year,
             },
             success:function(response){
-                // alert(response.student_acc.month);
+                // alert(response.student.amount);
                 let html = '';
+                let table = '';
+                if(fee_category_id == 2){
+                    $('#payment-data').removeClass('d-none');
+                }
+                else{
+                    $('#payment-data').addClass('d-none');
+                }
+               
+                $.each(response.student_acc,function(key,value){
+                    table += '<tr>'+
+                                '<td>'+value.year+'</td>'+
+                                '<td>'+value.month+'</td>'
+                             '</tr>';
+                });
+                table = $('#payment-table').html(table);
+                
                 $('#student-data').removeClass('d-none');
                 html += '<h3>Student Information</h3>'+
-                        '<input type="hidden" name="student_id" value="' + response.student.student_id + '"/>' +
+                        '<input type="hidden" name="student_id" value="' + response.student_id + '"/>' +
                         '<br>'+
                         '<span><strong>Student Name :</strong> '+response.student.student.name+'</span>'+
                         '<br>'+
                         '<span><strong>Student Id :</strong> '+response.student.student.id_no+'</span>'+
-                        '<br>'+
-                        '<span><strong>Student Roll :</strong> '+response.student.roll+'</span>'+
                         '<br>'+
                         '<span><strong>Father Name :</strong> '+response.student.student.fname+'</span>'+
                         '<br>'+
@@ -106,10 +132,14 @@ Student Payment History
                         '<br>'+
                         '<span><strong>Year :</strong> '+response.student.student_year.year+'</span>'+
                         '<br>'+
-                        '<span><strong>Group :</strong> '+response.student.group.group_name+'</span>'+
                         '<br>'+
+                        '<h3>Payment Information</h3>'+
                         '<br>'+
-                        '<h3>Payment Information</h3>'
+                        '<span><strong>Fee Type :</strong> '+response.student.fee_category.name+'</span>'+
+                        '<br>'+
+                        '<span><strong>Amount :</strong> '+response.student.amount+'</span>'+
+                        '<br>'+
+                        '<span><strong>Payment Date :</strong> '+response.student.payment_date+'</span>'
                 html = $('#student-data').html(html);
             }
         });
