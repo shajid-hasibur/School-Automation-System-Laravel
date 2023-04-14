@@ -79,7 +79,9 @@ class PaymentController extends Controller
     }
 
     public function studentData(Request $request){
-        dd($request->all());
+        // dd($request->all());
+        $exam_fee = '';
+        $student_account = '';
         $user_data = User::where('id_no',$request->id_no)->first();
         $student_data = AccountStudentFee::with('student','student_class','student_year','fee_category','discount')
         ->where('year_id',$request->year_id)
@@ -88,24 +90,30 @@ class PaymentController extends Controller
         ->where('student_id',$user_data->id)
         ->first();
 
-        $student_account = AccountStudentFee::where('year_id',$request->year_id)
-        ->where('class_id',$request->class_id)
-        ->where('student_id',$user_data->id)
-        ->where('fee_category_id',$request->fee_category_id)
-        ->whereYear('date',$request->year)
-        ->selectRaw('year(date) year, monthname(date) month, count(*) data')
-        ->groupBy('year', 'month')
-        ->get();
-
-        if($request->fee_category_id == 4){
-            
+        if($request->fee_category_id == 2){
+            $student_account = AccountStudentFee::where('year_id',$request->year_id)
+            ->where('class_id',$request->class_id)
+            ->where('student_id',$user_data->id)
+            ->where('fee_category_id',$request->fee_category_id)
+            ->whereYear('date',$request->year)
+            ->selectRaw('year(date) year, monthname(date) month, count(*) data')
+            ->groupBy('year', 'month')
+            ->get();
         }
 
-
-       
+        if($request->fee_category_id == 4){
+            $exam_fee = AccountStudentFee::with('exam_type')->select('exam_type_id')
+            ->where('class_id',$request->class_id)
+            ->where('student_id',$user_data->id)
+            ->where('fee_category_id',$request->fee_category_id)
+            ->whereYear('payment_date',$request->year)
+            ->get();
+            
+        }
         return response()->json([
             'student' => $student_data,
             'student_acc' => $student_account,
+            'exam_fee' => $exam_fee,
         ]);
     }
 }

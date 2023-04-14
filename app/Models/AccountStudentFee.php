@@ -44,4 +44,8 @@ class AccountStudentFee extends Model
     {
         return $this->belongsTo(AssignStudent::class, 'student_id', 'student_id');
     }
+    public function exam_type()
+    {
+        return $this->belongsTo(ExamType::class, 'exam_type_id', 'id');
+    }
 }
