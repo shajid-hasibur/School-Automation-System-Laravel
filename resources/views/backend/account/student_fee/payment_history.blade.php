@@ -66,8 +66,10 @@ Student Payment History
                             <table class="table table-primary">
                                 <thead class="table table-dark">
                                     <tr>
-                                        <th>Year</th>
-                                        <th>Month</th>
+                                        <th>Payment of Year</th>
+                                        <th>Payment of Month</th>
+                                        <th>Amount</th>
+                                        <th>Date of Payment</th>
                                     </tr>
                                 </thead>
                                 <tbody id="payment-table">
@@ -80,10 +82,25 @@ Student Payment History
                                 <thead class="table table-dark">
                                     <tr>
                                         <th>Exam Name</th>
-                                        {{-- <th>Status</th> --}}
+                                        <th>Amount</th>
+                                        <th>Date of Payment</th>
                                     </tr>
                                 </thead>
                                 <tbody id="payment-table2">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-none" id="payment-data3">
+                            <table class="table table-primary">
+                                <thead class="table table-dark">
+                                    <tr>
+                                        <th>Payment of Year</th>
+                                        <th>Amount</th>
+                                        <th>Date of Payment</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payment-table3">
                                     
                                 </tbody>
                             </table>
@@ -113,39 +130,11 @@ Student Payment History
                 'year':year,
             },
             success:function(response){
+                console.log(response.other_fee);
                 let html = '';
                 let table = '';
                 let table2 = '';
-
-                if(fee_category_id == 2){
-                    $('#payment-data').removeClass('d-none');
-                    $.each(response.student_acc,function(key,value){
-                    table += '<tr>'+
-                                '<td>'+value.year+'</td>'+
-                                '<td>'+value.month+'</td>'
-                             '</tr>';
-                    });
-                table = $('#payment-table').html(table);
-                }
-                else{
-                    $('#payment-data').addClass('d-none');
-                }
-
-                if(fee_category_id == 4){
-                    $('#payment-data2').removeClass('d-none');
-                    $.each(response.exam_fee,function(key,value){
-                        if(value.exam_type != null){
-                            table2 += '<tr>'+
-                                            '<td>'+value.exam_type.name+'</td>'+
-                                            // '<td><strong class="badge badge-success">Paid</strong></td>'
-                                      '</tr>';
-                        }
-                    });
-                    table2 = $('#payment-table2').html(table2);
-                }
-                else{
-                    $('#payment-data2').addClass('d-none');
-                }
+                let table3 = '';
 
                 $('#student-data').removeClass('d-none');
                 html += '<h3>Student Information</h3>'+
@@ -160,19 +149,69 @@ Student Payment History
                         '<span><strong>Class :</strong> '+response.student.student_class.name+'</span>'+
                         '<br>'+
                         '<span><strong>Year :</strong> '+response.student.student_year.year+'</span>'+
+                        // '<br>'+
+                        // '<span><strong>Group :</strong> '+response.student.group.group_name+'</span>'+
+                        '<br>'+
+                        '<span><strong>Roll :</strong> '+response.student.assigned_student.roll+'</span>'+
                         '<br>'+
                         '<br>'+
                         '<h3>Payment Information</h3>'+
                         '<br>'+
-                        '<span><strong>Fee Type :</strong> '+response.student.fee_category.name+'</span>'+
-                        '<br>'+
-                        '<span><strong>Amount :</strong> '+response.student.amount+'</span>'+
-                        '<br>'+
-                        '<span><strong>Payment Date :</strong> '+response.student.payment_date+'</span>'
+                        '<span><strong>Fee Type :</strong> '+response.student.fee_category.name+'</span>'
+                        // '<br>'+
+                        // '<span><strong>Amount :</strong> '+response.student.amount+'</span>'
+                        // '<br>'+
+                        // '<span><strong>Payment Date :</strong> '+response.student.payment_date+'</span>'
                 html = $('#student-data').html(html);
+
+                if(fee_category_id == 2){
+                    $('#payment-data').removeClass('d-none');
+                    $.each(response.student_acc,function(key,value){
+                    table += '<tr>'+
+                                '<td>'+value.year+'</td>'+
+                                '<td>'+value.month+'</td>'+
+                                '<td>'+value.pamount+'</td>'+
+                                '<td>'+value.pdate+'</td>'
+                             '</tr>';
+                    });
+                    table = $('#payment-table').html(table);
+
+                }else{
+                    $('#payment-data').addClass('d-none');
+                }
+                
+                if(fee_category_id == 4){
+                    $('#payment-data2').removeClass('d-none');
+                    $.each(response.exam_fee,function(key,value){
+                        if(value.exam_type != null){
+                            table2 += '<tr>'+
+                                            '<td>'+value.exam_type.name+'</td>'+
+                                            '<td>'+value.amount+'</td>'+
+                                            '<td>'+value.payment_date+'</td>'
+                                      '</tr>';
+                        }
+                    });
+                    table2 = $('#payment-table2').html(table2);
+
+                }else{
+                    $('#payment-data2').addClass('d-none');
+                }
+                if(fee_category_id != 4 && fee_category_id != 2){
+                    $('#payment-data3').removeClass('d-none');
+                    $.each(response.other_fee,function(key, value){
+                        table3 += '<tr>'+
+                                        '<td>'+value.otherfeeyear+'</td>'+
+                                        '<td>'+value.otherfeeamount+'</td>'+
+                                        '<td>'+value.otherfeedate+'</td>'     
+                                  '</tr>';
+                    });
+                    table3 = $('#payment-table3').html(table3);
+
+                }else{
+                    $('#payment-data3').addClass('d-none');
+                }
             }
         });
-
     });
 </script>
 <script>

@@ -1,5 +1,5 @@
 @section('title')
-Student Fee
+Student Payment
 @endsection
 @extends('backend.layouts.master')
 @section('style')
@@ -54,7 +54,7 @@ Student Fee
                                     </div>
                             </div>
                             <div class="d-none" id="student-data">
-                                
+
                             </div>
                             <br><div class="d-none" id="payment-data">
                                 <div class="form-row">
@@ -64,10 +64,10 @@ Student Fee
                                             
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    {{-- <div class="form-group col-md-4">
                                         <label><strong>Month</strong></label>
-                                        <input type="date" name="date" class="form-control">
-                                    </div>
+                                        <input type="date" name="date" class="form-control" value="" id="monthinput">
+                                    </div> --}}
                                     <div class="form-group col-md-4">
                                         <label><strong>Payment Date</strong></label>
                                         <input type="date" name="payment_date" class="form-control">
@@ -133,7 +133,6 @@ Student Fee
         let id_no = $('#id_no').val();
         let fee_category_id = $('#fee_category_id').val();
 
-        
         $.ajax({
             url: "{{ route('student.payment.search') }}",
             type: "GET",
@@ -175,10 +174,13 @@ Student Fee
                         '<input type="hidden" name="amount" value="' + response.final_amount + '"/>' +
                         '<br>'+
                         '<br>'+
+                        '<label>Payment of Year/Month/Date</label>'+
+                        '<input type="date" name="date" class="form-control col-md-6" required>' +
+                        '<br>'+
+                        '<br>'+
                         '<button type="button" class="btn btn-warning" id="payment-button">Take Payment</button>'
                 html = $('#student-data').html(html);
             }
-            
         });
     });
 </script>
@@ -195,6 +197,8 @@ Student Fee
             success:function(response){
                 if(response.id == fee_category_id && response.id == 2)
                 {
+                    $('#examfee').addClass('d-none');
+                    $('#otherfee').addClass('d-none');
                     $('#payment-data').removeClass('d-none');
                     let html = '';
                     html += '<option value="'+response.id+'">'+response.name+'</option>';
@@ -202,6 +206,8 @@ Student Fee
                 }
                 else if(response.id == fee_category_id && response.id == 4)
                 {
+                    $('#otherfee').addClass('d-none');
+                    $('#payment-data').addClass('d-none');
                     $('#examfee').removeClass('d-none');
                     let html1 = '';
                     html1 += '<option value="'+response.id+'">'+response.name+'</option>';
@@ -209,6 +215,8 @@ Student Fee
                 }
                 else
                 {
+                    $('#payment-data').addClass('d-none');
+                    $('#examfee').addClass('d-none');
                     $('#otherfee').removeClass('d-none');
                     let html2 = '';
                     html2 += '<option value="'+response.id+'">'+response.name+'</option>';
@@ -216,6 +224,13 @@ Student Fee
                 }
             }
         });
+    });
+</script>
+
+<script>
+    $(document).on('click','#month_fee_button',function(){
+        let date = $('#monthinput').val();
+        $('#payment_year_month').val(date);
     });
 </script>
 

@@ -62,7 +62,7 @@ Add Fee Amount
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label"></label>
-                            <div class="col-lg-8">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>

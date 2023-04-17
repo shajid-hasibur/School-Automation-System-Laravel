@@ -83,10 +83,11 @@ class PaymentController extends Controller
         $exam_fee = '';
         $student_account = '';
         $user_data = User::where('id_no',$request->id_no)->first();
-        $student_data = AccountStudentFee::with('student','student_class','student_year','fee_category','discount')
+        $student_data = AccountStudentFee::with('student','student_class','student_year','fee_category','discount','group','assigned_student')
         ->where('year_id',$request->year_id)
         ->where('class_id',$request->class_id)
         ->where('fee_category_id',$request->fee_category_id)
+        // ->whereYear('payment_date',$request->year)
         ->where('student_id',$user_data->id)
         ->first();
 
@@ -96,24 +97,32 @@ class PaymentController extends Controller
             ->where('student_id',$user_data->id)
             ->where('fee_category_id',$request->fee_category_id)
             ->whereYear('date',$request->year)
-            ->selectRaw('year(date) year, monthname(date) month, count(*) data')
-            ->groupBy('year', 'month')
+            ->selectRaw('year(date) year, monthname(date) month, count(*) data,payment_date pdate, amount pamount')
+            ->groupBy('year', 'month','pdate','pamount')
             ->get();
         }
 
         if($request->fee_category_id == 4){
-            $exam_fee = AccountStudentFee::with('exam_type')->select('exam_type_id')
+            $exam_fee = AccountStudentFee::with('exam_type')->select('exam_type_id','payment_date','amount')
             ->where('class_id',$request->class_id)
             ->where('student_id',$user_data->id)
             ->where('fee_category_id',$request->fee_category_id)
-            ->whereYear('payment_date',$request->year)
+            ->whereYear('date',$request->year)
             ->get();
-            
+            // dd($exam_fee);
         }
+        $other_fee = AccountStudentFee::where('class_id',$request->class_id)
+        ->where('student_id',$user_data->id)
+        ->where('fee_category_id',$request->fee_category_id)
+        ->whereYear('date',$request->year)
+        ->selectRaw('year(date) otherfeeyear, payment_date otherfeedate,amount otherfeeamount')
+        ->get();
+        // dd($other_fee);
         return response()->json([
             'student' => $student_data,
             'student_acc' => $student_account,
             'exam_fee' => $exam_fee,
+            'other_fee' => $other_fee,
         ]);
     }
 }
