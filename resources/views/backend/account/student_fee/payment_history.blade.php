@@ -17,6 +17,13 @@ Student Payment History
                     <div class="card-header">
                         <h5 class="card-title">Search Student Payment</h5>
                     </div>
+                    <div class="d-none col-md-6" id="alert">
+                        <div class="alert alert-danger">
+                            There is no payment found of this student in this category
+                            {{-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"> --}}
+                            {{-- <span aria-hidden="true">&times;</span> --}}
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-3">
@@ -130,7 +137,12 @@ Student Payment History
                 'year':year,
             },
             success:function(response){
-                console.log(response.other_fee);
+                if(response.student == null){
+                    $('#alert').removeClass('d-none');
+                }
+                else if(response.student != null){
+                    $('#alert').addClass('d-none');
+                }
                 let html = '';
                 let table = '';
                 let table2 = '';
