@@ -4,6 +4,68 @@ Student Payment
 @extends('backend.layouts.master')
 @section('style')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script>
+    function downloadPDF(){
+        let name = document.getElementById("sname").textContent;
+        let id = document.getElementById("sid").textContent;
+        let roll = document.getElementById("sroll").textContent;
+        let sfname = document.getElementById("sfname").textContent;
+        let sclass = document.getElementById("sclass").textContent;
+        let syear = document.getElementById("syear").textContent;
+        let sgroup = document.getElementById("sgroup").textContent;
+        let sfeetype = document.getElementById("sfeetype").textContent;
+        let sfeeamount = document.getElementById("sfeeamount").textContent;
+        let sdiscount = document.getElementById("sdiscount").textContent;
+        let sdiscountamount = document.getElementById("sdiscountamount").textContent;
+        let stotalamount = document.getElementById("stotalamount").textContent;
+        let e = document.getElementById("exam_type_id");
+        let value = e.value;
+        let exam = e.options[e.selectedIndex].text;
+        let date = document.getElementById("pay-date").value;
+        // alert(text);
+        let str1 = 'Fee Type : Monthly Fee';
+        let str2 = sfeetype;
+
+        const monthArray = ["January","February","March","April","May","June","July",
+        "August","September","October","November","December"];
+
+        let d = new Date(date);
+
+        if(!!d.valueOf()){
+           month = d.getMonth();
+           year = d.getFullYear();
+        }
+        if(str1.toUpperCase() == str2.toUpperCase()){
+            monthfee = monthArray[month];
+        }
+        else{
+            monthfee = '';
+        }
+        if(exam == 'Select Exam'){
+            exam = '';
+        }
+
+        let doc = new jsPDF();
+
+        doc.text(20, 20, name);
+        doc.text(20, 30, id);
+        doc.text(20, 40, roll);
+        doc.text(20, 50, sfname);
+        doc.text(20, 60, sclass);
+        doc.text(20, 70, syear);
+        doc.text(20, 80, sgroup);
+        doc.text(20, 90, sfeetype);
+        doc.text(20, 100, "Exam : " + exam);
+        doc.text(20, 110, "Payment of Month : " + monthfee);
+        doc.text(20, 120, "Payment of Year : " + year);
+        doc.text(20, 130, sfeeamount);
+        doc.text(20, 140, sdiscount);
+        doc.text(20, 150, sdiscountamount);
+        doc.text(20, 160, stotalamount);
+        doc.save("student-payment-slip.pdf");
+    }
+</script>
 @endsection
 @section('rightbar-content')
 <div class="contentbar">
@@ -53,9 +115,9 @@ Student Payment
                                     <button type="button" id="search" class="btn btn-success">Search</button>
                                     </div>
                             </div>
-                            <div class="d-none" id="student-data">
+                                <div class="d-none" id="student-data">
 
-                            </div>
+                                </div>
                             <br><div class="d-none" id="payment-data">
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
@@ -64,16 +126,9 @@ Student Payment
                                             
                                         </select>
                                     </div>
-                                    {{-- <div class="form-group col-md-4">
-                                        <label><strong>Month</strong></label>
-                                        <input type="date" name="date" class="form-control" value="" id="monthinput">
-                                    </div> --}}
                                     <div class="form-group col-md-4">
                                         <label><strong>Payment Date</strong></label>
                                         <input type="date" name="payment_date" class="form-control">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <button type="submit" class="btn btn-primary">Confirm Payment</button>
                                     </div>
                                 </div>
                             </div>
@@ -90,16 +145,13 @@ Student Payment
                                         <select id="exam_type_id" name="exam_type_id" class="form-control">
                                             <option value="">Select Exam</option>
                                             @foreach ($exams as $exam)
-                                                <option value="{{ $exam->id }}">{{ $exam->name }}</option>
+                                                <option id="exam_name" value="{{ $exam->id }}">{{ $exam->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label><strong>Payment Date</strong></label>
                                         <input type="date" name="payment_date" class="form-control">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <button type="submit" id="exambutton" class="btn btn-primary">Confirm Payment</button>
                                     </div>
                                 </div>
                             </div>
@@ -115,10 +167,10 @@ Student Payment
                                         <label><strong>Payment Date</strong></label>
                                         <input type="date" name="payment_date" class="form-control">
                                     </div>
-                                    <div class="form-group col-md-12">
-                                        <button type="submit" class="btn btn-primary">Confirm Payment</button>
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="d-none" id="submitbutton">
+                                <button class="btn btn-danger" onclick="downloadPDF()">Confirm Payment</button>
                             </div>
                         </form>    
                     </div>
@@ -146,36 +198,36 @@ Student Payment
                 let html = '';
                 $('#student-data').removeClass('d-none');
                 html += '<h3>Student Information</h3>'+
-                        '<input type="hidden" name="student_id" value="' + response.student.student_id + '"/>' +
+                        '<input type="hidden" name="student_id" id="student_id" value="' + response.student.student_id + '"/>' +
                         '<br>'+
-                        '<span><strong>Student Name :</strong> '+response.student.student.name+'</span>'+
+                        '<span id="sname"><strong>Student Name :</strong> '+response.student.student.name+'</span>'+
                         '<br>'+
-                        '<span><strong>Student Id :</strong> '+response.student.student.id_no+'</span>'+
+                        '<span id="sid"><strong>Student Id :</strong> '+response.student.student.id_no+'</span>'+
                         '<br>'+
-                        '<span><strong>Student Roll :</strong> '+response.student.roll+'</span>'+
+                        '<span id="sroll"><strong>Student Roll :</strong> '+response.student.roll+'</span>'+
                         '<br>'+
-                        '<span><strong>Father Name :</strong> '+response.student.student.fname+'</span>'+
+                        '<span id="sfname"><strong>Father Name :</strong> '+response.student.student.fname+'</span>'+
                         '<br>'+
-                        '<span><strong>Class :</strong> '+response.student.student_class.name+'</span>'+
+                        '<span id="sclass"><strong>Class :</strong> '+response.student.student_class.name+'</span>'+
                         '<br>'+
-                        '<span><strong>Year :</strong> '+response.student.student_year.year+'</span>'+
+                        '<span id="syear"><strong>Year :</strong> '+response.student.student_year.year+'</span>'+
                         '<br>'+
-                        '<span><strong>Group :</strong> '+response.student.group.group_name+'</span>'+
+                        '<span id="sgroup"><strong>Group :</strong> '+response.student.group.group_name+'</span>'+
                         '<br>'+
-                        '<span><strong>Fee Type :</strong> '+response.feeAmount.fee_category.name+'</span>'+
+                        '<span id="sfeetype"><strong>Fee Type :</strong> '+response.feeAmount.fee_category.name+'</span>'+
                         '<br>'+
-                        '<span><strong>Amount :</strong> '+response.feeAmount.amount+'</span>'+
+                        '<span id="sfeeamount"><strong>Amount :</strong> '+response.feeAmount.amount+'</span>'+
                         '<br>'+
-                        '<span><strong>Discount :</strong> '+response.student.discount.discount+'%</span>'+
+                        '<span id="sdiscount"><strong>Discount :</strong> '+response.student.discount.discount+'%</span>'+
                         '<br>'+
-                        '<span><strong>Discount Amount :</strong> '+response.discount_amount+'</span>'+
+                        '<span id="sdiscountamount"><strong>Discount Amount :</strong> '+response.discount_amount+'</span>'+
                         '<br>'+
-                        '<span><mark style="background-color:yellow;"><strong>Amount For This Student :</strong> '+response.final_amount+'</mark></span>'+
+                        '<span id="stotalamount"><mark style="background-color:yellow;"><strong>Amount For This Student :</strong> '+response.final_amount+'</mark></span>'+
                         '<input type="hidden" name="amount" value="' + response.final_amount + '"/>' +
                         '<br>'+
                         '<br>'+
                         '<label>Payment of Year/Month/Date</label>'+
-                        '<input type="date" name="date" class="form-control col-md-6" required>' +
+                        '<input type="date" name="date" id="pay-date" class="form-control col-md-6" required>' +
                         '<br>'+
                         '<br>'+
                         '<button type="button" class="btn btn-warning" id="payment-button">Take Payment</button>'
@@ -187,6 +239,7 @@ Student Payment
 
 <script>
     $(document).on('click','#payment-button',function(){
+        
         let fee_category_id = $('#fee_category_id').val();
         $.ajax({
             url: "{{ route('student.fee.search') }}",
@@ -224,6 +277,7 @@ Student Payment
                 }
             }
         });
+        $('#submitbutton').removeClass('d-none');
     });
 </script>
 
@@ -241,6 +295,25 @@ Student Payment
         {
             $('#exam_type_id').attr('required',true);
         }
+    });
+</script>
+<script>
+    $(document).on('click','.submit',function(){
+        // let class_id = $('#class_id').val();
+        // let student_id = $('#student_id').val();
+        // $("#student-data").printElement();
+        let data = $('#student-data').html();
+        document.getElementById("clonediv").innerHTML = data;
+        
+        printDiv("clonediv");
+
+        function printDiv(id){
+                var printContents = document.getElementById(id).innerHTML;
+                var originalContents = document.body.innerHTML;
+                document.body.innerHTML = printContents;
+                window.print();
+                document.body.innerHTML = originalContents;
+            }
     });
 </script>
 </div>

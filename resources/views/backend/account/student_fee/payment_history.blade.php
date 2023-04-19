@@ -19,7 +19,7 @@ Student Payment History
                     </div>
                     <div class="d-none col-md-6" id="alert">
                         <div class="alert alert-danger">
-                            There is no payment found of this student in this category
+                            There is no payment found of this student in this fee type or payment year.
                             {{-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"> --}}
                             {{-- <span aria-hidden="true">&times;</span> --}}
                         </div>
