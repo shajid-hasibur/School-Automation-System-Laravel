@@ -87,6 +87,7 @@ class PaymentController extends Controller
         ->where('year_id',$request->year_id)
         ->where('class_id',$request->class_id)
         ->where('fee_category_id',$request->fee_category_id)
+        ->whereYear('date',$request->year)
         ->where('student_id',$user_data->id)
         ->first();
 

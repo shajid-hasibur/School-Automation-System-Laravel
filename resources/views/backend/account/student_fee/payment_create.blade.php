@@ -5,6 +5,7 @@ Student Payment
 @section('style')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="{{ asset('backend/assets/js/base64logo.js') }}"></script>
 <script>
     function downloadPDF(){
         let name = document.getElementById("sname").textContent;
@@ -45,24 +46,31 @@ Student Payment
         if(exam == 'Select Exam'){
             exam = '';
         }
+        let printDate = new Date().toLocaleString();
 
-        let doc = new jsPDF();
-
-        doc.text(20, 20, name);
-        doc.text(20, 30, id);
-        doc.text(20, 40, roll);
-        doc.text(20, 50, sfname);
-        doc.text(20, 60, sclass);
-        doc.text(20, 70, syear);
-        doc.text(20, 80, sgroup);
-        doc.text(20, 90, sfeetype);
-        doc.text(20, 100, "Exam : " + exam);
-        doc.text(20, 110, "Payment of Month : " + monthfee);
-        doc.text(20, 120, "Payment of Year : " + year);
-        doc.text(20, 130, sfeeamount);
-        doc.text(20, 140, sdiscount);
-        doc.text(20, 150, sdiscountamount);
-        doc.text(20, 160, stotalamount);
+        let doc = new jsPDF('p', 'mm', 'a6');
+        doc.setFontSize(10);
+        doc.addImage(logo, 'JPEG', 5, 4, 30, 25);
+        doc.text(35, 10, "Unique Model School");
+        doc.text(35, 15, "Address: Shajadpur, Sirajganj");
+        doc.text(35, 20, "Email: uniquemodelschool14@gmail.com");
+        doc.text(35, 25, "Phone: 017299619595");
+        doc.text(10, 40, name);
+        doc.text(10, 45, id);
+        doc.text(10, 50, roll);
+        doc.text(10, 55, sfname);
+        doc.text(10, 60, sclass);
+        doc.text(10, 65, syear);
+        doc.text(10, 70, sgroup);
+        doc.text(10, 75, sfeetype);
+        doc.text(10, 80, "Exam : " + exam);
+        doc.text(10, 85, "Payment of Month : " + monthfee);
+        doc.text(10, 90, "Payment of Year : " + year);
+        doc.text(10, 95, sfeeamount);
+        doc.text(10, 100, sdiscount);
+        doc.text(10, 105, sdiscountamount);
+        doc.text(10, 110, stotalamount);
+        doc.text(48, 147, "Print Date : "+printDate);
         doc.save("student-payment-slip.pdf");
     }
 </script>
@@ -170,7 +178,7 @@ Student Payment
                                 </div>
                             </div>
                             <div class="d-none" id="submitbutton">
-                                <button class="btn btn-danger" onclick="downloadPDF()">Confirm Payment</button>
+                                <button  class="btn btn-danger" id="sub-btn" onclick="downloadPDF()">Confirm Payment</button>
                             </div>
                         </form>    
                     </div>
@@ -281,40 +289,22 @@ Student Payment
     });
 </script>
 
-<script>
+{{-- <script>
     $(document).on('click','#month_fee_button',function(){
         let date = $('#monthinput').val();
         $('#payment_year_month').val(date);
     });
-</script>
+</script> --}}
 
 <script>
-    $(document).on('click','#exambutton',function(){
+    $(document).on('click','#sub-btn',function(){
         let examInput = $('#exam_type_id').val();
-        if(examInput == '')
-        {
+
+        if($('#examfee').is(":visible") && examInput == ''){
             $('#exam_type_id').attr('required',true);
         }
     });
 </script>
-<script>
-    $(document).on('click','.submit',function(){
-        // let class_id = $('#class_id').val();
-        // let student_id = $('#student_id').val();
-        // $("#student-data").printElement();
-        let data = $('#student-data').html();
-        document.getElementById("clonediv").innerHTML = data;
-        
-        printDiv("clonediv");
 
-        function printDiv(id){
-                var printContents = document.getElementById(id).innerHTML;
-                var originalContents = document.body.innerHTML;
-                document.body.innerHTML = printContents;
-                window.print();
-                document.body.innerHTML = originalContents;
-            }
-    });
-</script>
 </div>
 @endsection
