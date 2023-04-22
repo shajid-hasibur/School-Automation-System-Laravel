@@ -18,6 +18,11 @@ Student Marks Entry
                     <h5 class="card-title">Student Search</h5>
                 </div>
                 <div class="card-body">
+                    <div class="d-none" id="group-warning">
+                        <div class="alert alert-danger">
+                            Please select a group and search again for class 9 and 10 to get the students groupwise.
+                        </div>
+                    </div>
                     <form method="post" action="{{ route('marks.entry.store') }}">
                         @csrf
                         <div class="form-row">
@@ -64,7 +69,16 @@ Student Marks Entry
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
-                                <button type="button" name="search" id="search" class="btn btn-secondary" style="margin-top: 32px; margin-left:33px;">Search</button>
+                                <label for="group_id">Group</label>
+                                <select id="group_id" name="group_id" class="form-control">
+                                    <option selected="">Choose...</option>
+                                    @foreach ($groups as $group)
+                                    <option value="{{ $group->id }}">{{ $group->group_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="button" onclick="validation()" name="search" id="search" class="btn btn-secondary" >Search</button>
                             </div>
                         </div>
 
@@ -80,7 +94,7 @@ Student Marks Entry
                                         <tr>
                                             <th>Student Id</th>
                                             <th>Student Name</th>
-                                            <th>Father Name</th>
+                                            <th>Class</th>
                                             <th>Gender</th>
                                             <th>Descriptive Mark</th>
                                             <th>Objective Mark</th>
@@ -110,6 +124,11 @@ Student Marks Entry
         var section_id = $('#section_id').val();
         var assign_subject_id = $('#assign_subject_id').val();
         var exam_type_id = $('#exam_type_id').val();
+        var group_id = $('#group_id').val();
+
+        // if(class_id == 9 && class_id == 10){
+        //     $('#group_id').attr('required',true);
+        // }
 
         $.ajax({
             url: "{{ route('marks.get.students') }}",
@@ -120,9 +139,19 @@ Student Marks Entry
                 'section_id': section_id,
                 'assign_subject_id': assign_subject_id,
                 'exam_type_id': exam_type_id,
+                'group_id': group_id
             },
             success: function(data) {
                 // alert(data.result);
+                var studentData = '';
+                if(class_id == 9 || class_id == 10){
+                    studentData = data.ssc_students;
+                }else if(class_id != 9 && class_id != 10){
+                    studentData = data.students;
+                }else{
+                    studentData = '';
+                }
+
                 $('#marks-entry').removeClass('d-none');
                 var html = '';
                 if (data.result == 'no') {
@@ -135,7 +164,7 @@ Student Marks Entry
                     $('#marksTable').removeAttr('hidden','hidden');
                     $('#formSubmit').removeAttr('hidden', 'hidden');
 
-                    $.each(data, function(key, value) {
+                    $.each(studentData, function(key, value) {
                         html +=
                             '<tr>' +
                             '<td>' + value.student.id_no +
@@ -143,7 +172,7 @@ Student Marks Entry
                             '<input type="hidden" name="id_no[]" value="' + value.student.id_no + '"/>' +
                             '</td>' +
                             '<td>' + value.student.name + '</td>' +
-                            '<td>' + value.student.fname + '</td>' +
+                            '<td>' + value.student_class.name + '</td>' +
                             '<td>' + value.student.gender + '</td>' +
                             '<td>' + '<input type="number" class="form-control" name="descriptive_mark[]" required/>' + '</td>' +
                             '<td>' + '<input type="number" class="form-control" name="objective_mark[]" required/>' + '</td>' +
@@ -175,6 +204,18 @@ Student Marks Entry
             }
         });
     });
+</script>
+<script>
+    function validation(){
+        let class_id = document.getElementById("class_id").value;
+        let group = document.getElementById("group_id").value;
+        
+        if((group == 'Choose...') && (class_id == 9 || class_id == 10)){
+            $('#group-warning').removeClass('d-none');
+        }else{
+            $('#group-warning').addClass('d-none');
+        }
+    }
 </script>
  <!-- <script>
     //check If marks entered

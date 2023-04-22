@@ -12,8 +12,11 @@ Assign Additional Subject
         <div class="col-lg-12">
             <div class="card m-b-30">
                 <div class="card-header d-flex">
-                    <h5 class="card-title">Additional Subject Students</h5>
-                    <div style="margin-left:540px;" class="d-flex">
+                    <div class="col-md-6">
+                        <h5 class="card-title">Additional Subject Students</h5>
+                    </div>
+                    
+                    <div class="col-md-6 d-flex" style="justify-content:end">
                         <p style="margin-top:5px;">Assign additional subject :&nbsp;</p>
                         <a href="{{ route('additional.create') }}" class="btn btn-success">Assign</a>
                     </div>

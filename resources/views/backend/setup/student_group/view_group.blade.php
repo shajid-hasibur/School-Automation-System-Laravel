@@ -42,7 +42,7 @@ Student Group
 
                                            <a href="{{ route('student.group.edit', $studentGroup->id) }}" style="float: none; margin: 5px;" class="tabledit-edit-button btn btn-sm btn-info"><span class="ti-pencil"></span></a>
 
-                                           <a href="{{ route('student.group.delete', $studentGroup->id) }}" class="tabledit-delete-button btn btn-sm btn-danger" style="margin: 5px; float: none;" id="delete"><span class="ti-trash"></span></a>
+                                           {{-- <a href="{{ route('student.group.delete', $studentGroup->id) }}" class="tabledit-delete-button btn btn-sm btn-danger" style="margin: 5px; float: none;" id="delete"><span class="ti-trash"></span></a> --}}
 
                                        </div>
                                     </td>

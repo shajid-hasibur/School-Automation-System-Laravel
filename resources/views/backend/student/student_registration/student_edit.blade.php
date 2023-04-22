@@ -139,7 +139,7 @@ Add Student
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="email"><strong>Email</strong> <span class="text-danger">*</span></label>
-                                <input type="email" name="email" class="form-control" id="email" value="{{$editData['student']['email']}}" required>
+                                <input type="email" name="email" class="form-control" id="email" value="{{$editData['student']['email']}}">
                             </div>
 
 

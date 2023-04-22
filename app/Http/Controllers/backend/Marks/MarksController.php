@@ -7,6 +7,7 @@ use App\Models\AssignStudent;
 use App\Models\AssignSubject;
 use App\Models\ExamType;
 use App\Models\StudentClass;
+use App\Models\StudentGroup;
 use App\Models\StudentMarks;
 use App\Models\StudentSection;
 use App\Models\StudentYear;
@@ -22,6 +23,7 @@ class MarksController extends Controller
         $data['classes'] = StudentClass::all();
         $data['sections'] = StudentSection::all();
         $data['exam_types'] = ExamType::all();
+        $data['groups'] = StudentGroup::all();
 
         return view('backend.marks.marks_add', $data);
     }
@@ -29,24 +31,34 @@ class MarksController extends Controller
     //Marks Get students
     public function GetStudents(Request $request)
     {
+        // dd($request->all());
+        $ssc_students = '';
         $year_id = $request->year_id;
         $class_id = $request->class_id;
         $section_id = $request->section_id;
         $assign_subject_id = $request->assign_subject_id;
         $exam_type_id = $request->exam_type_id;
-        
-        
-        // dd($subjectid);
-
-        // $addSubId = AssignStudent::select('add_subject_id');
+        $group_id = $request->group_id;
+    
 
         $markExists= StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->where('assign_subject_id', $assign_subject_id)->where('exam_type_id', $exam_type_id)->exists();
         // dd($markExists);
-
-        $students = AssignStudent::with(['student'])->where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->get();
+        if($class_id == 9 || $class_id == 10){
+            $ssc_students = AssignStudent::with('student','student_class')
+            ->where('year_id',$year_id)
+            ->where('class_id',$class_id)
+            ->where('section_id',$section_id)
+            ->where('group_id',$group_id)
+            ->get();
+        }
+       
+        $students = AssignStudent::with(['student','student_class'])->where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->get();
         // dd($students);
         if ($markExists != true) {
-            return response()->json($students);
+            return response()->json([
+              'students' => $students,
+              'ssc_students' => $ssc_students
+            ]);
         } else {
             return response()->json([
                 'result' => 'no',
@@ -61,7 +73,7 @@ class MarksController extends Controller
         $class_id = $request->class_id;
         $section_id = $request->section_id;
         $assign_subject_id = $request->assign_subject_id;
-        $exam_type_id = $request->exam_type_id;
+        $exam_type_id = $request->exam_type_id; 
 
         $marksValidation = StudentMarks::where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->where('assign_subject_id', $assign_subject_id)->where('exam_type_id', $exam_type_id)->get();
 

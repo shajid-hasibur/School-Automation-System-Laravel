@@ -89,10 +89,10 @@ $array = $user['permission'];
                     </a>
                     <ul class="vertical-submenu">
                         <li><a href="{{route('student.registration.view')}}">Student Registration</a></li>
-                        <li><a href="{{route('registration.fee.view')}}">Registration Fee</a></li>
-                        <li><a href="{{route('monthly.fee.view')}}">Monthly Fee</a></li>
+                        {{-- <li><a href="{{route('registration.fee.view')}}">Registration Fee</a></li> --}}
+                        {{-- <li><a href="{{route('monthly.fee.view')}}">Monthly Fee</a></li> --}}
                         <li><a href="{{ route('student.attendance.view') }}">Student Attendance</a></li>
-                        <li><a href="{{route('exam.fee.view') }}">Exam Fee</a></li>
+                        {{-- <li><a href="{{route('exam.fee.view') }}">Exam Fee</a></li> --}}
                     </ul>
                 </li>
                 @endif

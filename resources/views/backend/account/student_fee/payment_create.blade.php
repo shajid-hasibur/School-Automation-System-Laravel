@@ -24,7 +24,7 @@ Student Payment
         let value = e.value;
         let exam = e.options[e.selectedIndex].text;
         let date = document.getElementById("pay-date").value;
-        // alert(text);
+
         let str1 = 'Fee Type : Monthly Fee';
         let str2 = sfeetype;
 

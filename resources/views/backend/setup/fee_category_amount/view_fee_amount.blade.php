@@ -45,7 +45,7 @@ Fee Amount
 
                                                 <a href="{{ route('fee.amount.details', $fee_category_amount->fee_category_id) }}" style="float: none; margin: 5px;" class="tabledit-delete-button btn btn-sm btn-dark"><span></span><i class="dripicons-document"></i></a>
 
-                                                <a href="{{ route('fee.amount.delete', $fee_category_amount->fee_category_id) }}" class="tabledit-delete-button btn btn-sm btn-danger" style="margin: 5px; float: none;" id="delete"><span class="ti-trash"></span></a>
+                                                {{-- <a href="{{ route('fee.amount.delete', $fee_category_amount->fee_category_id) }}" class="tabledit-delete-button btn btn-sm btn-danger" style="margin: 5px; float: none;" id="delete"><span class="ti-trash"></span></a> --}}
                                             </div>
                                     </td>
                                 </tr>
