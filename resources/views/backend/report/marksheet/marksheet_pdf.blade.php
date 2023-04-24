@@ -1,5 +1,5 @@
 @section('title')
-Student Marks Entry
+Student Marksheet
 @endsection
 @extends('backend.layouts.master')
 @section('style')
@@ -116,7 +116,7 @@ Student Marks Entry
                                     elseif($grade1->grade_point >= 2){
                                         $bonusPoint = $grade1->grade_point-2;
                                     }
-                                    
+                                    // dd($bonusPoint);
                                     @endphp
                                     @foreach ($allMarks as $key => $mark)
                                     @php
@@ -200,8 +200,13 @@ Student Marks Entry
                                     $finalPoint = $total_grade_point+$bonusPoint;
                                     $total_grade = 0;
                                     $point_for_letter_grade = (float)$finalPoint/(float)$total_subject;
+                                    // dd($finalPoint);
+                                    if($point_for_letter_grade > 5){
+                                        $point_for_letter_grade = 5;
+                                    }
                                     $total_grade = App\Models\MarksGrade::where([['start_point', '<=', (int)$point_for_letter_grade], ['end_point', '>=', (int)$point_for_letter_grade]])->first();
                                     // $allPoint = $total_grade_point+$bonusPoint;
+                                    
                                     $gpa = (float)$finalPoint/(float)$total_subject;
                                 @endphp
                                 <tr>

@@ -568,6 +568,9 @@
                         $finalPoint = $total_grade_point+$bonusPoint;
                         $total_grade = 0;
                         $point_for_letter_grade = (float) $finalPoint / (float) $total_subject;
+                        if($point_for_letter_grade > 5){
+                            $point_for_letter_grade = 5;
+                        }
                         $total_grade = App\Models\MarksGrade::where([['start_point', '<=', (int) $point_for_letter_grade], ['end_point', '>=', (int) $point_for_letter_grade]])->first();
 
                         $gpa = (float) $finalPoint / (float) $total_subject;

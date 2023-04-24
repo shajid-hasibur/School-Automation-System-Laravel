@@ -76,7 +76,7 @@ Student Marks Edit
                                         <tr>
                                             <th>ID</th>
                                             <th>Student Name</th>
-                                            <th>Father Name</th>
+                                            <th>Class</th>
                                             <th>Gender</th>
                                             <th>Descrptive Mark</th>
                                             <th>Objective Mark</th>
@@ -126,7 +126,7 @@ Student Marks Edit
                         '<tr>' +
                         '<td>' + value.student.id_no + '<input type="hidden" name="student_id[]" value="' + value.student_id + '"/>' + '<input type="hidden" name="id_no[]" value="' + value.student.id_no + '"/>' + '</td>' +
                         '<td>' + value.student.name + '</td>' +
-                        '<td>' + value.student.fname + '</td>' +
+                        '<td>' + value.student_class.name + '</td>' +
                         '<td>' + value.student.gender + '</td>' +
                         '<td>' + '<input type="text" class="form-control" name="descriptive_mark[]" value="' + value.descriptive_mark + '" required/>' + '</td>' +
                         '<td>' + '<input type="text" class="form-control" name="objective_mark[]" value="' + value.objective_mark + '" required/>' + '</td>' +

@@ -1,5 +1,5 @@
 @section('title')
-Student Marks Entry
+Student Marksheet search
 @endsection
 @extends('backend.layouts.master')
 @section('style')

@@ -46,15 +46,17 @@ Student Payment
         if(exam == 'Select Exam'){
             exam = '';
         }
+        let onlyId = id.slice(13);
         let printDate = new Date().toLocaleString();
 
         let doc = new jsPDF('p', 'mm', 'a6');
         doc.setFontSize(10);
         doc.addImage(logo, 'JPEG', 5, 4, 30, 25);
         doc.text(35, 10, "Unique Model School");
-        doc.text(35, 15, "Address: Shajadpur, Sirajganj");
+        doc.text(35, 15, "Address: Shahjadpur, Sirajganj");
         doc.text(35, 20, "Email: uniquemodelschool14@gmail.com");
         doc.text(35, 25, "Phone: 017299619595");
+        doc.text(4,30,"...................................................................................................");
         doc.text(10, 40, name);
         doc.text(10, 45, id);
         doc.text(10, 50, roll);
@@ -70,8 +72,8 @@ Student Payment
         doc.text(10, 100, sdiscount);
         doc.text(10, 105, sdiscountamount);
         doc.text(10, 110, stotalamount);
-        doc.text(48, 147, "Print Date : "+printDate);
-        doc.save("student-payment-slip.pdf");
+        doc.text(50, 147, "Print Date : "+printDate);
+        doc.save(onlyId+"_payment_slip.pdf");
     }
 </script>
 @endsection

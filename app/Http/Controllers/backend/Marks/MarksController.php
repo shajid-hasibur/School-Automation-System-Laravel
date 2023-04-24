@@ -158,7 +158,7 @@ class MarksController extends Controller
         $assign_subject_id = $request->assign_subject_id;
         $exam_type_id = $request->exam_type_id;
 
-        $students = StudentMarks::with(['student'])->where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->where('assign_subject_id', $assign_subject_id)->where('exam_type_id', $exam_type_id)->get();
+        $students = StudentMarks::with(['student','student_class'])->where('year_id', $year_id)->where('class_id', $class_id)->where('section_id', $section_id)->where('assign_subject_id', $assign_subject_id)->where('exam_type_id', $exam_type_id)->get();
         // dd($students);
         return response()->json($students);
     }
