@@ -53,6 +53,7 @@ class AdditionalSubController extends Controller
        ->where('year_id', $request->year_id)
        ->where('class_id', $request->class_id)
        ->where('group_id', $request->group_id)
+       ->whereNotNull('add_subject_id')
        ->get();
        return response()->json($students);
     }

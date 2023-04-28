@@ -57,6 +57,11 @@ Assign Additional Subject
                             </div>
                         </div>
                     </form>
+                    <div class="d-none" id="alert">
+                        <div class="alert alert-success col-md-6" style="float:right;text-align:center;color:black">
+                            <strong>There is no student found in this criteria or not assigned additional subject</strong>
+                        </div>
+                    </div>
                     <div class="d-none" id="student-table">
                         <div class="col-md-12">
                             <table class="table table-primary table-bordered">
@@ -95,7 +100,11 @@ Assign Additional Subject
                 'group_id':group_id,
             },
             success:function(response){
-                
+                if(response == ''){
+                    $('#alert').removeClass('d-none');
+                }else{
+                    $('#alert').addClass('d-none');
+                }
                 let html = '';
                 $('#student-table').removeClass('d-none');
                 $.each(response, function(key, value){
