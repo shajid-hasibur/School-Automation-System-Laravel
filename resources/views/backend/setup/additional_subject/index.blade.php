@@ -64,8 +64,8 @@ Assign Additional Subject
                     </div>
                     <div class="d-none" id="student-table">
                         <div class="col-md-12">
-                            <table class="table table-primary table-bordered">
-                                <thead class="table table-dark">
+                            <table class="table table-success table-bordered">
+                                <thead class="table table-success">
                                     <tr>
                                         <th>Student Name</th>
                                         <th>Student Id</th>
@@ -120,7 +120,6 @@ Assign Additional Subject
                 html = $('#student-tbody').html(html);
                 // document.location.hash = "last search"
             }
-
         });
     });
 </script>
