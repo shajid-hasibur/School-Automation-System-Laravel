@@ -126,8 +126,8 @@ Add Student
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="section_id"><strong>Section</strong></label>
-                                <select name="section_id" class="select2-single form-control" id="section_id">
+                                <label for="section_id"><strong>Section</strong><span class="text-danger">*</span></label>
+                                <select name="section_id" class="select2-single form-control" id="section_id" required>
                                     <option value="">Select</option>
                                     @foreach ($sections as $section)
                                     <option value="{{ $section->id }}">{{ $section->section_name }}</option>
