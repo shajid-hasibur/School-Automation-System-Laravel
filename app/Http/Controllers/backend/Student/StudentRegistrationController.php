@@ -48,8 +48,8 @@ class StudentRegistrationController extends Controller
     public function StudentRegistrationStore(Request $request)
     {
         $request->validate([
-            'discount' => 'required|numeric|min:1|max:2',
-            'roll' => 'required|numeric'
+            'discount' => 'required|numeric|min:0|max:100',
+            'roll' => 'required|numeric',
         ]);
         DB::transaction(function () use ($request) {
             $checkYear = StudentYear::find($request->year_id)->year;
@@ -155,6 +155,10 @@ class StudentRegistrationController extends Controller
     // Student Registration Update
     public function StudentRegistrationUpdate(Request $request, $student_id)
     {
+        $request->validate([
+            'discount' => 'required|numeric',
+            'roll' => 'required|numeric',
+        ]);
         DB::transaction(function () use ($request, $student_id) {
             //user table
             $user = User::where('id',$student_id)->first();
