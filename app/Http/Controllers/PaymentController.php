@@ -52,7 +52,7 @@ class PaymentController extends Controller
     }
 
     public function store(Request $request){
-        dd($request->all());
+        // dd($request->all());
         $data = new AccountStudentFee();
         $data->year_id = $request->year_id;
         $data->class_id = $request->class_id;

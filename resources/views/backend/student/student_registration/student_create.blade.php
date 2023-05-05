@@ -79,6 +79,11 @@ Add Student
                             <div class="form-group col-md-4">
                                 <label for="discount"><strong>Discount</strong></label>
                                 <input type="text" name="discount" class="form-control" id="discount" placeholder="Enter Discount">
+                                <span style="color:red; font-size:14px">
+                                    @error('discount')
+                                      {{ $message }}
+                                    @enderror
+                                </span>
                             </div>
                         </div>
                         <div class="form-row">
@@ -132,6 +137,11 @@ Add Student
                             <div class="form-group col-md-4">
                                 <label for="roll"><strong>Roll</strong></label>
                                 <input type="text" name="roll" class="form-control" id="roll" placeholder="Enter Roll">
+                                <span style="color:red; font-size:14px">
+                                    @error('roll')
+                                      {{ $message }}
+                                    @enderror
+                                </span>
                             </div>
                         </div>
                         <div class="form-row">

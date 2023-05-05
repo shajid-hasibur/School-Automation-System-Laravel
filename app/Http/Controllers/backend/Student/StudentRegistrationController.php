@@ -47,6 +47,10 @@ class StudentRegistrationController extends Controller
     // Student Registration Store
     public function StudentRegistrationStore(Request $request)
     {
+        $request->validate([
+            'discount' => 'required|numeric|min:1|max:2',
+            'roll' => 'required|numeric'
+        ]);
         DB::transaction(function () use ($request) {
             $checkYear = StudentYear::find($request->year_id)->year;
             $student = User::where('usertype', 'student')->orderBy('id', 'desc')->first();
