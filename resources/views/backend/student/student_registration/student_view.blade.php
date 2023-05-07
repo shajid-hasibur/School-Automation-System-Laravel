@@ -3,6 +3,7 @@ Student List
 @endsection
 @extends('backend.layouts.master')
 @section('style')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- DataTables css -->
 <link href="{{ asset('backend/assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('backend/assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
@@ -51,7 +52,7 @@ Student List
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <button type="submit" name="search" class="btn btn-secondary" style="margin-top: 32px; margin-left:33px;">Search</button>
+                                <button type="submit" name="search" id="search" class="btn btn-secondary" style="margin-top: 32px; margin-left:33px;">Search</button>
                             </div>
                         </div>
                     </form>
@@ -66,6 +67,9 @@ Student List
                 <div class="card-header">
                     <h5 class="card-title">Student List</h5>
                     <a href="{{ route('student.registration.create') }}" class="btn btn-success" style="float: right;"><i class="feather icon-plus mr-2"></i> Add Student</a>
+                </div>
+                <div id="totalStudent" class="d-none col-md-12" style="text-align: center">
+                    
                 </div>
                 <div class="card-body">
                     <h6 class="card-subtitle"></h6>
@@ -175,6 +179,25 @@ Student List
         <!-- End col -->
     </div>
     <!-- End row -->
+{{-- <script>
+    $("form").submit(function(){
+        let year_id = $('#year_id').find(":selected").val();
+        let class_id = $('#class_id').find(":selected").val();
+        
+        $.ajax({
+            url: "{{ route('student.total') }}",
+            type: "GET",
+            data: {
+                'class_id': class_id,
+                'year_id': year_id
+            },
+            success:function(response){
+                $('#totalStudent').removeClass('d-none');
+                $('#totalStudent').html('<h2>'+response+'</h2>');
+            }
+        });
+    });
+</script>     --}}
 </div>
 <!-- End Contentbar -->
 @endsection

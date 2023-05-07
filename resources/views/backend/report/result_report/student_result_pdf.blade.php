@@ -552,7 +552,7 @@
                                 $grade_name1 = $grade1->grade_name;
                                 $grade_point1 = $grade1->grade_point;
                             @endphp
-                            @if ($grade_name1 == 'F' && $grade_point1 == '0.00')
+                            @if (@$addSubMark['assign_subject']['subject']['name'] == '')
                             <td></td>
                             <td></td>
                             @else

@@ -286,4 +286,11 @@ class StudentRegistrationController extends Controller
         $pdf->setProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
+
+    public function TotalStudent(Request $request){
+        $totalStudent = AssignStudent::where('year_id',$request->year_id)
+        ->where('class_id',$request->class_id)
+        ->count();
+        return response()->json($totalStudent);
+    }
 }

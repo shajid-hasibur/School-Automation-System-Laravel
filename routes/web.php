@@ -217,6 +217,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('registration/promotion/{student_id}', [StudentRegistrationController::class, 'StudentRegistrationPromotionView'])->name('student.registration.promotion');
         Route::post('registration/promotion/update/{student_id}', [StudentRegistrationController::class, 'StudentRegistrationPromotionUpdate'])->name('student.registration.promotion.update');
         Route::get('registration/promotion/details/{student_id}', [StudentRegistrationController::class, 'StudentRegistrationDetails'])->name('student.registration.promotion.details');
+        Route::get('total',[StudentRegistrationController::class,'TotalStudent'])->name('student.total');
 
         // Registration Fee Routes
         Route::get('registration/fee/view', [RegistrationFeeController::class, 'RegistrationFeeView'])->name('registration.fee.view');

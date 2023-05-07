@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend\Setup;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignStudent;
 use App\Models\StudentClass;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class StudentClassController extends Controller
     public function StudentClassView()
     {
         $studentClasses = StudentClass::all();
-        return view('backend.setup.student_class.view_class', compact('studentClasses'));
+        return view('backend.setup.student_class.view_class', compact('studentClasses')); 
     }
     public function StudentClassCreate()
     {

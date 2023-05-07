@@ -59,7 +59,7 @@ Edit Assign Subject
                                         <label for="subjective_mark">Subjective Mark <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="subjective_mark" name="subjective_mark[]" placeholder="Enter Subjective Mark" value="{{ $edit->subjective_mark }}" >
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-2" style="margin-top: 33px;">
                                         <span class="btn btn-success addeventmore p-1"><i class="fa fa-plus"></i></span>
                                         <span class="btn btn-danger removeeventmore p-1"><i class="fa fa-close"></i></span>
                                     </div>
@@ -106,7 +106,7 @@ Edit Assign Subject
                     <label for="subjective_mark">Subjective Mark <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="subjective_mark" name="subjective_mark[]" placeholder="Enter Subjective Mark">
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-2" style="margin-top: 33px;">
                     <span class="btn btn-success addeventmore p-1"><i class="fa fa-plus"></i></span>
                     <span class="btn btn-danger removeeventmore p-1"><i class="fa fa-close"></i></span>
                 </div>

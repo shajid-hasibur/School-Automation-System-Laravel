@@ -124,7 +124,6 @@ class MarksController extends Controller
                 $data->objective_mark = $request->objective_mark[$i];
                 $data->practical_mark = $request->practical_mark[$i];
                 $data->total_mark = $data->descriptive_mark+$data->objective_mark+$data->practical_mark;
-                // dd($data);
                 $data->save();
                   
             }
