@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdditionalSubController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\backend\Account\AccountSalaryController;
@@ -401,5 +402,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('student/payment/data',[PaymentController::class,'studentData'])->name('student.payment.data');
 
+    // new payment system controller
+
+    Route::get('request/student/payment',[AccountController::class,'index'])->name('request.payment');
+    Route::post('request/student/payment/store',[AccountController::class,'store'])->name('request.payment.store');
+    Route::get('student/fee/page',[AccountController::class,'PaymentPage'])->name('fee.page');
+    Route::get('get/student/invoice',[AccountController::class,'GetInvoice'])->name('get.student.invoice');
 
 });
