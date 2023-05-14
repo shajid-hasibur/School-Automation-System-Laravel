@@ -113,7 +113,7 @@ Student Payments
                                         '<td>'+value.exam_name.name+'</td>'+
                                         '<td>'+value.payment_for_date+'</td>'+
                                         '<td>'+value.status+'</td>'+
-                                        '<td><a class="btn btn-primary btn-sm">Take Payment</a></td>'
+                                        '<td><button type="button" value="'+value.id+'" class="btn btn-primary btn-sm show">Take Payment</button></td>'
                                 '</tr>';
                         });
                         exam_table = $('#due-exam-payment-table').html(exam_table);
@@ -130,14 +130,21 @@ Student Payments
                                     '<td>'+value.fee_category.name+'</td>'+
                                     '<td>'+value.payment_for_date+'</td>'+
                                     '<td>'+value.status+'</td>'+
-                                    '<td><a class="btn btn-primary btn-sm">Take Payment</a></td>'
+                                    '<td><button type="button" value="'+value.id+'" class="btn btn-primary btn-sm show">Take Payment</button></td>'
                                 '</tr>';
-                        });
+                    });
                         table = $('#due-payment-table').html(table);
-                    }
+                }
             }
 
         });
     });
+
+    $(document).on('click','.show',function(){
+        let invoiceId = $(this).val();
+        let route = "{{ route('get.payment.invoice',":invoiceId") }}";
+        route = route.replace(':invoiceId',invoiceId);
+        window.location=route;
+    });    
 </script>    
 @endsection

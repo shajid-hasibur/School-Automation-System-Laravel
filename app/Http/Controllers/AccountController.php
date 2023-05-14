@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AssignStudent;
 use App\Models\ExamType;
 use App\Models\FeeCategory;
+use App\Models\FeeCategoryAmount;
 use App\Models\Invoice;
 use App\Models\User;
 use App\Models\StudentClass;
@@ -122,6 +123,27 @@ class AccountController extends Controller
         ->get();
 
         return response()->json($studentInvoice);
+    }
+
+    public function getPaymentInvoice($id){
+        $invoice = Invoice::with('assign_student.student')
+        ->with('assign_student.student_class')
+        ->with('assign_student.student_year')
+        ->with('assign_student.discount')
+        ->with('fee_category')
+        ->with('exam_name')
+        ->findOrFail($id);
+
+        $fee_amount = FeeCategoryAmount::select('amount')
+        ->where('fee_category_id',$invoice->fee_category_id)
+        ->where('class_id',$invoice->class_id)->first();
+        
+        $original_amount = $fee_amount->amount;
+        $discount = $invoice['assign_student']['discount']['discount'];
+        $discount_amount = $discount / 100 * $original_amount;
+        $payable_amount = (int)$original_amount - (int)$discount_amount;
+        // dd($discount_amount);
+        return view('backend.account.student_fee.payment_details',compact('invoice','fee_amount','discount_amount','payable_amount'));
     }
 
     
