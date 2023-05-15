@@ -32,7 +32,12 @@ Student Payments
                                 <button type="button" id="search" class="btn btn-success" style="margin-top: 31px;">Search</button>
                             </div>
                         </div>
-                        <div class="d-none col-md-12" id="due-payment">
+                        <div class="col-md-12 d-none" id="alert">
+                            <div class="alert alert-success col-md-7" role="alert" style="color:black;text-align:start">
+                                No due payments found for this student in this fee type or fee is not requested yet.
+                            </div>
+                        </div>
+                        <div class="d-none col-md-12 hiddendiv" id="due-payment">
                             <table class="table table-success">
                                 <thead class="table table-success">
                                     <tr>
@@ -41,9 +46,7 @@ Student Payments
                                         <th>Student Id</th>
                                         <th>Year</th>
                                         <th>Class</th>
-                                        {{-- <th>Roll</th> --}}
                                         <th>Fee Type</th>
-                                        {{-- <th>Exam</th> --}}
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -54,7 +57,7 @@ Student Payments
                                 </tbody>
                             </table>
                         </div>
-                        <div class="d-none col-md-12" id="due-exam-payment">
+                        <div class="d-none col-md-12 hiddendiv" id="due-exam-payment">
                             <table class="table table-success">
                                 <thead class="table table-success">
                                     <tr>
@@ -63,7 +66,6 @@ Student Payments
                                         <th>Student Id</th>
                                         <th>Year</th>
                                         <th>Class</th>
-                                        {{-- <th>Roll</th> --}}
                                         <th>Fee Type</th>
                                         <th>Exam</th>
                                         <th>Date</th>
@@ -95,6 +97,13 @@ Student Payments
             },
             success:function(response){
                 // alert(fee_category_id);
+                if(response == ''){
+                    $('.hiddendiv').hide();
+                    $('#alert').removeClass('d-none');
+                }else{
+                    $('.hiddendiv').show();
+                    $('#alert').addClass('d-none');
+                }
                 let table = '';
                 let exam_table = '';
                

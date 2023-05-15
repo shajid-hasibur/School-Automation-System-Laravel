@@ -9,6 +9,7 @@ use App\Models\FeeCategoryAmount;
 use App\Models\Invoice;
 use App\Models\User;
 use App\Models\StudentClass;
+use App\Models\StudentPayment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -142,8 +143,28 @@ class AccountController extends Controller
         $discount = $invoice['assign_student']['discount']['discount'];
         $discount_amount = $discount / 100 * $original_amount;
         $payable_amount = (int)$original_amount - (int)$discount_amount;
-        // dd($discount_amount);
+        
         return view('backend.account.student_fee.payment_details',compact('invoice','fee_amount','discount_amount','payable_amount'));
+    }
+
+    public function storePayment(Request $request, $id){
+        // dd($request->all());
+        $invoice = Invoice::findOrFail($id);
+        $invoice->status = "Paid";
+        $invoice->update();
+        $payment = new StudentPayment();
+        $payment->invoice_id = $invoice->id;
+        $payment->student_id = $invoice->student_id;
+        $payment->amount = $request->amount;
+        $payment->payment_date = now();
+        $payment->save();
+
+        $notification = array(
+            'message' => 'Student payment is successfully taken',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('fee.page')->with($notification);
     }
 
     

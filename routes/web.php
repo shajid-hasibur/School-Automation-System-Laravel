@@ -409,5 +409,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('student/fee/page',[AccountController::class,'PaymentPage'])->name('fee.page');
     Route::get('get/student/invoice',[AccountController::class,'GetInvoice'])->name('get.student.invoice');
     Route::get('payment/invoice/{id}',[AccountController::class,'getPaymentInvoice'])->name('get.payment.invoice');
+    Route::post('payment/store/{id}',[AccountController::class,'storePayment'])->name('payment.store');
 
 });

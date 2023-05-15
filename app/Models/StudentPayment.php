@@ -10,6 +10,6 @@ class StudentPayment extends Model
     use HasFactory;
     
     public function invoice(){
-        $this->belongsTo(Invoice::class,'invoice_id','id');
+       return $this->belongsTo(Invoice::class,'invoice_id','id');
     }
 }
