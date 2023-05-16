@@ -3,7 +3,9 @@ Student Payments
 @endsection
 @extends('backend.layouts.master')
 @section('style')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css"/>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>  
 @endsection
 @section('rightbar-content')
     <div class="contentbar">
@@ -59,6 +61,7 @@ Student Payments
                         </div>
                         <div class="d-none col-md-12 hiddendiv" id="due-exam-payment">
                             <table class="table table-success">
+                                
                                 <thead class="table table-success">
                                     <tr>
                                         <th>#Invoice No</th>
@@ -76,6 +79,45 @@ Student Payments
                                 <tbody id="due-exam-payment-table">
                                         
                                 </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 d-none" id="exam-payment-history">
+                            <div class="col-md-12" style="margin-top: 100px">
+
+                            </div>
+                            <h4>Exam Fee</h4>
+                            <table id="payment-history" class="table table-bordered">
+                                <thead class="table table-dark">
+                                    <tr>
+                                        <th>#Invoice No</th>
+                                        <th>Student Name</th>
+                                        <th>Student Id</th>
+                                        <th>Class</th>
+                                        <th>Fee Type</th>
+                                        <th>Payment of</th>
+                                        <th>Exam</th>
+                                        <th>Payment Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="exam-payment-history-tbody"></tbody>
+                            </table>
+                            <h4>Other Fee</h4>
+                            <table id="payment-history" class="table table-bordered">
+                                <thead class="table table-dark">
+                                    <tr>
+                                        <th>#Invoice No</th>
+                                        <th>Student Name</th>
+                                        <th>Student Id</th>
+                                        <th>Class</th>
+                                        <th>Fee Type</th>
+                                        <th>Payment of</th>
+                                        {{-- <th>Exam</th> --}}
+                                        <th>Payment Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payment-history-tbody"></tbody>
                             </table>
                         </div>
                     </div>
@@ -97,7 +139,8 @@ Student Payments
             },
             success:function(response){
                 // alert(fee_category_id);
-                if(response == ''){
+                $('#exam-payment-history').removeClass('d-none');
+                if(response.student_invoice == ''){
                     $('.hiddendiv').hide();
                     $('#alert').removeClass('d-none');
                 }else{
@@ -106,12 +149,13 @@ Student Payments
                 }
                 let table = '';
                 let exam_table = '';
-               
+                let examhistorytable = '';
+                let historytable = '';
 
                     if(fee_category_id == 4){
                         $('#due-exam-payment').removeClass('d-none');
                         $('#due-payment').addClass('d-none');
-                        $.each(response,function(key,value){
+                        $.each(response.student_invoice,function(key,value){
                             exam_table += '<tr>'+
                                         '<td>'+value.id+'</td>'+
                                         '<td>'+value.assign_student.student.name+'</td>'+
@@ -129,7 +173,7 @@ Student Payments
                     }else{
                         $('#due-payment').removeClass('d-none');
                         $('#due-exam-payment').addClass('d-none');
-                        $.each(response,function(key,value){
+                        $.each(response.student_invoice,function(key,value){
                         table += '<tr>'+
                                     '<td>'+value.id+'</td>'+
                                     '<td>'+value.assign_student.student.name+'</td>'+
@@ -144,6 +188,36 @@ Student Payments
                     });
                         table = $('#due-payment-table').html(table);
                 }
+                
+                $.each(response.paid_exam_invoice,function(key,value){
+                        examhistorytable += '<tr>'+
+                                    '<td>'+value.invoice_id+'</td>'+
+                                    '<td>'+value.assign_student.student.name+'</td>'+
+                                    '<td>'+value.assign_student.student.id_no+'</td>'+
+                                    '<td>'+value.assign_student.student_class.name+'</td>'+
+                                    '<td>'+value.invoice.fee_category.name+'</td>'+
+                                    '<td>'+value.invoice.payment_for_date+'</td>'+
+                                    '<td>'+value.invoice.exam_name.name+'</td>'+
+                                    '<td>'+value.payment_date+'</td>'+
+                                    '<td>'+value.invoice.status+'</td>'
+                                '</tr>';
+                    });
+                    examhistorytable = $('#exam-payment-history-tbody').html(examhistorytable);
+
+                        $.each(response.paid_invoice,function(key,value){
+                            historytable += '<tr>'+
+                                    '<td>'+value.invoice_id+'</td>'+
+                                    '<td>'+value.assign_student.student.name+'</td>'+
+                                    '<td>'+value.assign_student.student.id_no+'</td>'+
+                                    '<td>'+value.assign_student.student_class.name+'</td>'+
+                                    '<td>'+value.invoice.fee_category.name+'</td>'+
+                                    '<td>'+value.invoice.payment_for_date+'</td>'+
+                                    // '<td>'+""+'</td>'+
+                                    '<td>'+value.payment_date+'</td>'+
+                                    '<td>'+value.invoice.status+'</td>'
+                                '</tr>';
+                    });
+                        historytable = $('#payment-history-tbody').html(historytable);        
             }
 
         });

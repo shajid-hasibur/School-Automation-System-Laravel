@@ -12,4 +12,7 @@ class StudentPayment extends Model
     public function invoice(){
        return $this->belongsTo(Invoice::class,'invoice_id','id');
     }
+    public function assign_student(){
+        return $this->belongsTo(AssignStudent::class,'student_id','student_id');
+    }
 }

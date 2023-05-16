@@ -123,7 +123,26 @@ class AccountController extends Controller
         ->where('status','Due')
         ->get();
 
-        return response()->json($studentInvoice);
+        $PaidInvoice = StudentPayment::with('invoice.fee_category')
+        ->with('assign_student.student')
+        ->with('assign_student.student_class')
+        ->whereRelation('invoice','exam_type_id','=',null)
+        ->where('student_id',$userData->id)
+        ->get();
+
+        $PaidExamInvoice = StudentPayment::with('invoice.fee_category')
+        ->with('assign_student.student')
+        ->with('assign_student.student_class')
+        ->with('invoice.exam_name')->has('invoice.exam_name')
+        ->where('student_id',$userData->id)
+        ->get();
+        // dd($PaidInvoice);
+
+        return response()->json([
+            'student_invoice' => $studentInvoice,
+            'paid_invoice' => $PaidInvoice,
+            'paid_exam_invoice' => $PaidExamInvoice
+        ]);
     }
 
     public function getPaymentInvoice($id){
