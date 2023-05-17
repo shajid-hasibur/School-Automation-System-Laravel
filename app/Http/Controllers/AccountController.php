@@ -12,6 +12,7 @@ use App\Models\StudentClass;
 use App\Models\StudentPayment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
@@ -167,16 +168,18 @@ class AccountController extends Controller
     }
 
     public function storePayment(Request $request, $id){
-        // dd($request->all());
-        $invoice = Invoice::findOrFail($id);
-        $invoice->status = "Paid";
-        $invoice->update();
-        $payment = new StudentPayment();
-        $payment->invoice_id = $invoice->id;
-        $payment->student_id = $invoice->student_id;
-        $payment->amount = $request->amount;
-        $payment->payment_date = now();
-        $payment->save();
+        
+        DB::transaction(function () use($request,$id){
+            $invoice = Invoice::findOrFail($id);
+            $invoice->status = "Paid";
+            $invoice->update();
+            $payment = new StudentPayment();
+            $payment->invoice_id = $invoice->id;
+            $payment->student_id = $invoice->student_id;
+            $payment->amount = $request->amount;
+            $payment->payment_date = now();
+            $payment->save();
+        });
 
         $notification = array(
             'message' => 'Student payment is successfully taken',
