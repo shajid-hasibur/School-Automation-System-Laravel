@@ -94,7 +94,7 @@ Student Payments
                                         <th>Student Id</th>
                                         <th>Class</th>
                                         <th>Fee Type</th>
-                                        <th>Payment of</th>
+                                        <th>Payment of(Y-M-D)</th>
                                         <th>Exam</th>
                                         <th>Payment Date</th>
                                         <th>Status</th>
@@ -111,7 +111,7 @@ Student Payments
                                         <th>Student Id</th>
                                         <th>Class</th>
                                         <th>Fee Type</th>
-                                        <th>Payment of</th>
+                                        <th>Payment of(Y-M-D)</th>
                                         {{-- <th>Exam</th> --}}
                                         <th>Payment Date</th>
                                         <th>Status</th>
@@ -166,7 +166,7 @@ Student Payments
                                         '<td>'+value.exam_name.name+'</td>'+
                                         '<td>'+value.payment_for_date+'</td>'+
                                         '<td>'+value.status+'</td>'+
-                                        '<td><button type="button" value="'+value.id+'" class="btn btn-primary btn-sm show">Take Payment</button></td>'
+                                        '<td><button type="button" value="'+value.id+'" class="btn btn-danger btn-sm show">Take Payment</button></td>'
                                 '</tr>';
                         });
                         exam_table = $('#due-exam-payment-table').html(exam_table);
@@ -183,7 +183,7 @@ Student Payments
                                     '<td>'+value.fee_category.name+'</td>'+
                                     '<td>'+value.payment_for_date+'</td>'+
                                     '<td>'+value.status+'</td>'+
-                                    '<td><button type="button" value="'+value.id+'" class="btn btn-primary btn-sm show">Take Payment</button></td>'
+                                    '<td><button type="button" value="'+value.id+'" class="btn btn-danger btn-sm show">Take Payment</button></td>'
                                 '</tr>';
                     });
                         table = $('#due-payment-table').html(table);

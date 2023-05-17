@@ -44,6 +44,7 @@ use App\Http\Controllers\backend\Student\RegistrationFeeController;
 use App\Http\Controllers\backend\Student\StudentRegistrationController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -410,5 +411,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('get/student/invoice',[AccountController::class,'GetInvoice'])->name('get.student.invoice');
     Route::get('payment/invoice/{id}',[AccountController::class,'getPaymentInvoice'])->name('get.payment.invoice');
     Route::post('payment/store/{id}',[AccountController::class,'storePayment'])->name('payment.store');
+
+    // school report controller
+    Route::get('school/fee/collection/page',[ReportController::class,'index'])->name('fee.collection.page');
+    Route::get('fee/collection/report',[ReportController::class,'getReport'])->name('get.collection.report');
 
 });

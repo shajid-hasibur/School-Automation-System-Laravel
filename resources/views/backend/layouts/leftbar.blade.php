@@ -166,9 +166,9 @@ $array = $user['permission'];
                         <i class="fa fa-sort-amount-desc"></i><span>Report</span><i class="feather icon-chevron-right pull-right"></i>
                     </a>
                     <ul class="vertical-submenu">
-                        <li><a href="{{ route('report.monthly.profit.view') }}">Monthly Profit</a></li>
-
-                        <li><a href="{{ route('report.attendance.view') }}">Employee Attendance Report</a></li>
+                        {{-- <li><a href="{{ route('report.monthly.profit.view') }}">Monthly Profit</a></li> --}}
+                        <li><a href="{{ route('fee.collection.page') }}">Collection Report</a></li>
+                        <li><a href="{{ route('report.attendance.view') }}">Attendance Report</a></li>
                     </ul>
                 </li>
                 @endif
