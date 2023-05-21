@@ -44,6 +44,7 @@ use App\Http\Controllers\backend\Student\RegistrationFeeController;
 use App\Http\Controllers\backend\Student\StudentRegistrationController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentStatusController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -416,4 +417,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('school/fee/collection/page',[ReportController::class,'index'])->name('fee.collection.page');
     Route::get('fee/collection/report',[ReportController::class,'getReport'])->name('get.collection.report');
 
+    //payment status controller
+    Route::get('payment/status/view',[PaymentStatusController::class,'index'])->name('payment.status.index');
+    Route::post('payment/get/data',[PaymentStatusController::class,'getPaymentData'])->name('get.payment.data');
 });

@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('code')->nullable();
             $table->string('role')->nullable()->comment('admin=headofsoft, operator, user=employee');
             $table->date('joindate')->nullable();
-            $table->integer('designation_id')->nullable();
+            $table->unsignedBigInteger('designation_id')->nullable();
             $table->double('salary')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1=active, 0=inactive');
             $table->rememberToken();

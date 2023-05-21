@@ -15,8 +15,8 @@ class CreateFeeCategoryAmountsTable extends Migration
     {
         Schema::create('fee_category_amounts', function (Blueprint $table) {
             $table->id();
-            $table->Integer('fee_category_id');
-            $table->Integer('class_id');
+            $table->unsignedBigInteger('fee_category_id');
+            $table->unsignedBigInteger('class_id');
             $table->double('amount');
             $table->timestamps();
         });

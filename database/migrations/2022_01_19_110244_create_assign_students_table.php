@@ -15,14 +15,14 @@ class CreateAssignStudentsTable extends Migration
     {
         Schema::create('assign_students', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id')->comment('user_id=student_id');
+            $table->unsignedBigInteger('student_id')->comment('user_id=student_id');
             $table->string('roll')->nullable();
-            $table->integer('class_id');
-            $table->integer('year_id');
-            $table->integer('group_id')->nullable();
-            $table->integer('section_id')->nullable();
-            $table->integer('shift_id');
-            $table->integer('add_subject_id')->nullable();
+            $table->unsignedBigInteger('class_id');
+            $table->unsignedBigInteger('year_id');
+            $table->unsignedBigInteger('group_id')->nullable();
+            $table->unsignedBigInteger('section_id')->nullable();
+            $table->unsignedBigInteger('shift_id');
+            $table->unsignedBigInteger('add_subject_id')->nullable();
             $table->timestamps();
         });
     }

@@ -15,11 +15,11 @@ class CreateRoutinesTable extends Migration
     {
         Schema::create('routines', function (Blueprint $table) {
             $table->id();
-            $table->integer('teacher_id')->comment('teacher_id = User id');
-            $table->integer('class_id')->nullable();
-            $table->integer('year_id')->nullable();
-            $table->integer('shift_id')->nullable();
-            $table->integer('section_id')->nullable();
+            $table->unsignedBigInteger('teacher_id')->comment('teacher_id = User id');
+            $table->unsignedBigInteger('class_id')->nullable();
+            $table->unsignedBigInteger('year_id')->nullable();
+            $table->unsignedBigInteger('shift_id')->nullable();
+            $table->unsignedBigInteger('section_id')->nullable();
             $table->string('day')->nullable();
             $table->timestamps();
         });

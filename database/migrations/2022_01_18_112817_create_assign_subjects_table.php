@@ -15,8 +15,8 @@ class CreateAssignSubjectsTable extends Migration
     {
         Schema::create('assign_subjects', function (Blueprint $table) {
             $table->id();
-            $table->integer('class_id');
-            $table->integer('subject_id');
+            $table->unsignedBigInteger('class_id');
+            $table->unsignedBigInteger('subject_id');
             $table->double('full_mark');
             $table->double('pass_mark');
             $table->double('subjective_mark');

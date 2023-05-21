@@ -18,7 +18,7 @@ class CreateStudentPaymentsTable extends Migration
             $table->unsignedBigInteger('invoice_id');
             $table->foreign('invoice_id')->references('id')->on('invoices');
             $table->unsignedBigInteger('student_id');
-            $table->Integer('amount');
+            $table->double('amount');
             $table->date('payment_date');
             $table->timestamps();
         });
