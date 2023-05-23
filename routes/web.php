@@ -419,5 +419,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     //payment status controller
     Route::get('payment/status/view',[PaymentStatusController::class,'index'])->name('payment.status.index');
-    Route::post('payment/get/data',[PaymentStatusController::class,'getPaymentData'])->name('get.payment.data');
+    Route::get('payment/get/data',[PaymentStatusController::class,'getPaymentData'])->name('get.payment.data');
 });
