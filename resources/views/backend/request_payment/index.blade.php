@@ -16,7 +16,7 @@ Assign Student Fee
                     <form action="{{ route('request.payment.store') }}" method="POST">
                         @csrf
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="class_id">Class</label>
                                 <select id="class_id" name="class_id" class="form-control">
                                     <option selected="" value="">Select a class</option>
@@ -30,7 +30,7 @@ Assign Student Fee
                                     @enderror
                                 </span>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="fee_category_id">Fee Type</label>
                                 <select id="fee_category_id" name="fee_category_id" class="form-control">
                                     <option selected="" value="">Select a fee type</option>
@@ -44,7 +44,7 @@ Assign Student Fee
                                     @enderror
                                 </span>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="exam_type_id">Exam Type</label>
                                 <select id="exam_type_id" name="exam_type_id" class="form-control">
                                     <option selected="" value="">Select a Exam type</option>
@@ -54,6 +54,15 @@ Assign Student Fee
                                 </select>
                                 <span style="color:red; font-size:14px">
                                     @error('exam_type_id')
+                                      {{ $message }}
+                                    @enderror
+                                </span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="payment_for_date">Payment of Date</label>
+                                <input type="date" class="form-control" name="payment_for_date">
+                                <span style="color:red; font-size:14px">
+                                    @error('payment_for_date')
                                       {{ $message }}
                                     @enderror
                                 </span>

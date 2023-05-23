@@ -16,13 +16,13 @@ class CreateStudentAttendancesTable extends Migration
         Schema::create('student_attendances', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id')->comment('student_id = User id');
-            $table->unsignedBigInteger('roll')->nullable();
+            $table->string('roll',4)->nullable();
             $table->unsignedBigInteger('year_id')->nullable();
             $table->unsignedBigInteger('shift_id')->nullable();
             $table->unsignedBigInteger('section_id')->nullable();
             $table->unsignedBigInteger('group_id')->nullable();
             $table->date('date');
-            $table->string('attendance_status')->comment('attendance_status = Present, Absent, Leave, Half Day');
+            $table->string('attendance_status',20)->comment('attendance_status = Present, Absent, Leave, Half Day');
             $table->timestamps();
         });
     }

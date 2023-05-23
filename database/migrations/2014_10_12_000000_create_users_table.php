@@ -15,22 +15,22 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('usertype')->nullable()->comment('Student, Teacher, Employee, Admin');
-            $table->string('name')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('usertype',15)->nullable()->comment('Student, Teacher, Employee, Admin');
+            $table->string('name',100)->nullable();
+            $table->string('email',100)->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('mobile')->nullable();
+            $table->string('mobile',15)->nullable();
             $table->string('address')->nullable();
-            $table->string('gender')->nullable();
+            $table->string('gender',10)->nullable();
             $table->string('image')->nullable();
-            $table->string('fname')->nullable();
-            $table->string('mname')->nullable();
-            $table->string('religion')->nullable();
+            $table->string('fname',100)->nullable();
+            $table->string('mname',100)->nullable();
+            $table->string('religion',10)->nullable();
             $table->string('id_no')->nullable();
             $table->date('dob')->nullable();
-            $table->string('code')->nullable();
-            $table->string('role')->nullable()->comment('admin=headofsoft, operator, user=employee');
+            $table->string('code',15)->nullable();
+            $table->string('role',15)->nullable()->comment('admin=headofsoft, operator, user=employee');
             $table->date('joindate')->nullable();
             $table->unsignedBigInteger('designation_id')->nullable();
             $table->double('salary')->nullable();

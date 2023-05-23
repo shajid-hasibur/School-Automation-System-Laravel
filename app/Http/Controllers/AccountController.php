@@ -24,7 +24,7 @@ class AccountController extends Controller
     }
 
     public function store(Request $request){
-
+        // dd($request->all());
         $found = '';
         $fee_type = $request->fee_category_id;
        
@@ -32,19 +32,23 @@ class AccountController extends Controller
             $request->validate([
                 'exam_type_id' => 'required',
                 'class_id' => 'required',
-                'fee_category_id' => 'required'
+                'fee_category_id' => 'required',
+                'payment_for_date' => 'required'
             ],
             [
-                'exam_type_id.required' => 'Please select a exam type for this fee type'
+                'exam_type_id.required' => 'Please select a exam type for this fee type',
+                'payment_for_date.required' => 'Please provide a date'
             ]);
         }else{
             $request->validate([
                 'class_id' => 'required',
-                'fee_category_id' => 'required'
+                'fee_category_id' => 'required',
+                'payment_for_date' => 'required'
             ],
             [
                 'class_id.required' => 'Please select a class',
-                'fee_category_id.required' => 'Please select a fee type'
+                'fee_category_id.required' => 'Please select a fee type',
+                'payment_for_date.required' => 'Please provide a date'
             ]);
         }
         
@@ -53,29 +57,30 @@ class AccountController extends Controller
 
         
         $currentDate = Carbon::now();
+        $userGivenDate = Carbon::parse($request->payment_for_date);
+        // dd($userGivenDate);
         // $month = $currentDate->format('F');
-        if($fee_type != '2' && $fee_type != '4'){
-
-            $found = Invoice::where('class_id',$request->class_id)
-            ->where('fee_category_id',$request->fee_category_id)
-            ->whereYear('payment_for_date',$currentDate)
-            ->count();
-            // dd($found);
-        }else if($fee_type == '2'){
-
-            $found = Invoice::where('class_id',$request->class_id)
-            ->where('fee_category_id',$request->fee_category_id)
-            ->whereYear('payment_for_date',$currentDate)
-            ->whereMonth('payment_for_date',$currentDate)
-            ->count();
-            // dd($found);            
-        }else if($fee_type == '4'){
+        if($fee_type == '4'){
 
             $found = Invoice::where('class_id',$request->class_id)
             ->where('fee_category_id',$request->fee_category_id)
             ->where('exam_type_id',$request->exam_type_id)
-            ->whereYear('payment_for_date',$currentDate)
-            ->whereMonth('payment_for_date',$currentDate)
+            ->whereYear('payment_for_date',$userGivenDate)
+            ->count();
+            // dd($found);
+                   
+        }elseif($fee_type != '4' && $fee_type != '2'){
+            $found = Invoice::where('class_id',$request->class_id)
+            ->where('fee_category_id',$request->fee_category_id)
+            ->whereYear('payment_for_date',$userGivenDate)
+            ->count();
+            // dd($found);
+
+        }elseif($fee_type == '2'){
+            $found = Invoice::where('class_id',$request->class_id)
+            ->where('fee_category_id',$request->fee_category_id)
+            ->whereYear('payment_for_date',$userGivenDate)
+            ->whereMonth('payment_for_date',$userGivenDate)
             ->count();
             // dd($found);
         }
@@ -87,19 +92,19 @@ class AccountController extends Controller
                 $data->class_id = $students[$i]['class_id'];
                 $data->fee_category_id = $request->fee_category_id;
                 $data->exam_type_id = $request->exam_type_id;
-                $data->payment_for_date = now();
+                $data->payment_for_date = $request->payment_for_date;
                 $data->status = "Due";
                 $data->save();
             }
     
             $notification = array(
-                'message' => 'Student fee is requested for the selected class',
+                'message' => 'Student fee is requested for the selected class and given date',
                 'alert-type' => 'success'
             );
             return redirect()->route('request.payment')->with($notification);
         }else{
             $notification2 = array(
-                'message' => 'Student payment already requested for selected class or fee type or exam type',
+                'message' => 'Student payment already requested for selected class or fee type or exam type or given date',
                 'alert-type' => 'warning'
             );
             return redirect()->route('request.payment')->with($notification2);
