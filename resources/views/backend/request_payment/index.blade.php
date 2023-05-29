@@ -59,7 +59,7 @@ Assign Student Fee
                                 </span>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="payment_for_date">Payment of Date</label>
+                                <label for="payment_for_date">Payment For</label>
                                 <input type="date" class="form-control" name="payment_for_date">
                                 <span style="color:red; font-size:14px">
                                     @error('payment_for_date')

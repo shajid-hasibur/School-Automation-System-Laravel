@@ -194,6 +194,38 @@ class AccountController extends Controller
         return redirect()->route('fee.page')->with($notification);
     }
 
+    public function recent_pay_view(){
+        $today = Carbon::now();
+        $day = $today->format('d');
+        $PaidInvoice = StudentPayment::with('assign_student')
+        ->with('assign_student.student')
+        ->with('assign_student.student_class')
+        ->with('invoice.fee_category')
+        ->whereDay('payment_date',$day)
+        ->get();
+        $total_amount_collected = StudentPayment::whereDay('payment_date',$day)->sum('amount');
+        $total_payments = $PaidInvoice->count();
+        $heading = "Todays Fee Collections";
+        // dd($total_amount_collected);
+        return view('backend.account.student_fee.recent_pay',compact('PaidInvoice','heading','total_amount_collected','total_payments'));
+    }
+
+    public function getPayments(){
+        $today = Carbon::now();
+        $month = $today->format('m');
+        $PaidInvoice = StudentPayment::with('assign_student')
+        ->with('assign_student.student')
+        ->with('assign_student.student_class')
+        ->with('invoice.fee_category')
+        ->whereMonth('payment_date',$month)
+        ->get();
+        $total_amount_collected = StudentPayment::whereMonth('payment_date',$month)->sum('amount');
+        $total_payments = $PaidInvoice->count();
+        $heading = "Current Month Collections";
+        // dd($total_payments);
+        return view('backend.account.student_fee.recent_pay',compact('PaidInvoice','heading','total_amount_collected','total_payments'));
+    }
+
     
 
 

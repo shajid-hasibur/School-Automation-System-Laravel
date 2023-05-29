@@ -40,7 +40,7 @@ Student Payments
                             </div>
                         </div>
                         <div class="d-none col-md-12 hiddendiv" id="due-payment">
-                            <table class="table table-success">
+                            <table class="table table-success table-bordered">
                                 <thead class="table table-success">
                                     <tr>
                                         <th>#Invoice No</th>
@@ -49,7 +49,7 @@ Student Payments
                                         <th>Year</th>
                                         <th>Class</th>
                                         <th>Fee Type</th>
-                                        <th>Date</th>
+                                        <th>Payment Of(Y-M-D)</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -60,7 +60,7 @@ Student Payments
                             </table>
                         </div>
                         <div class="d-none col-md-12 hiddendiv" id="due-exam-payment">
-                            <table class="table table-success">
+                            <table class="table table-success table-bordered">
                                 
                                 <thead class="table table-success">
                                     <tr>
@@ -71,7 +71,7 @@ Student Payments
                                         <th>Class</th>
                                         <th>Fee Type</th>
                                         <th>Exam</th>
-                                        <th>Date</th>
+                                        <th>Payment Of(Y-M-D)</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>

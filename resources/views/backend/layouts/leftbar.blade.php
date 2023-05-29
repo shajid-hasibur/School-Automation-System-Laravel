@@ -136,7 +136,7 @@ $array = $user['permission'];
                         <li><a href="{{ route('request.payment') }}">Request for Payment</a></li>
                         <li><a href="{{ route('fee.page') }}">Student Payment</a></li>
                         <li><a href="{{ route('payment.status.index') }}">Payment Status</a></li>
-                        {{-- <li><a href="{{ route('student.payment.history') }}">Payment History</a></li> --}}
+                        <li><a href="{{ route('recent.payment.view') }}">Recently Paid</a></li>
                         <li><a href="{{ route('account.salary.view') }}">Employee Salary</a></li>
                         <li><a href="{{ route('account.other.view') }}">Others</a></li>
                     </ul>

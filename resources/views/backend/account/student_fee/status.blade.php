@@ -67,12 +67,8 @@ Student Payment Status
                             </div>
                         </div>
                     </form>
-                    {{-- @if(session()->has('message'))
-                        <div class="alert alert-success">
-                            {{ session()->get('message') }}
-                        </div>
-                    @endif --}}
-                    <div class="table-responsive">
+                    
+                    <div class="table-responsive" style="margin-top: 60px">
                         <table id="datatable-buttons" class="table table-bordered">
                             <thead style="background-color: black; color:white;">
                                 <tr>

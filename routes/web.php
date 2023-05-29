@@ -412,7 +412,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('get/student/invoice',[AccountController::class,'GetInvoice'])->name('get.student.invoice');
     Route::get('payment/invoice/{id}',[AccountController::class,'getPaymentInvoice'])->name('get.payment.invoice');
     Route::post('payment/store/{id}',[AccountController::class,'storePayment'])->name('payment.store');
-
+    Route::get('recent/payment/view',[AccountController::class,'recent_pay_view'])->name('recent.payment.view');
+    Route::get('current/month/payment',[AccountController::class,'getPayments'])->name('current.month.payment');
+    
     // school report controller
     Route::get('school/fee/collection/page',[ReportController::class,'index'])->name('fee.collection.page');
     Route::get('fee/collection/report',[ReportController::class,'getReport'])->name('get.collection.report');
